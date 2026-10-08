@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Padma Homestay | A family home in the Himalayan hills</title>
+    <meta
+      name="description"
+      content="Padma Homestay is a family-run home in the Himalayan hills with mountain-view rooms, home-cooked meals and a terrace that faces the snow line."
+    />
+    <meta name="theme-color" content="#edf0ee" />
+    <script>
+      // Resolve the theme before first paint so the page never flashes the wrong mode.
+      (function () {
+        var stored = null;
+        try {
+          stored = localStorage.getItem("padma-theme");
+        } catch (e) {}
+        var dark = stored
+          ? stored === "dark"
+          : window.matchMedia("(prefers-color-scheme: dark)").matches;
+        document.documentElement.dataset.theme = dark ? "dark" : "light";
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

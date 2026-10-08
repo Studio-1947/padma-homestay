@@ -1,0 +1,85 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+/*
+  Design tokens.
+  Palette: mist grey + deep pine, one accent (lotus rose). Same accent on every section.
+  Radius rule: buttons and chips are full pills, cards and media are 20px, inputs are 12px.
+  Z-index scale: content 0-10, nav 40, mobile menu 45, dev ribbon 50.
+*/
+:root {
+  --surface: #edf0ee;
+  --surface-2: #e1e7e3;
+  --ink: #14201c;
+  --muted: #4a5a54;
+  --line: rgb(20 32 28 / 0.14);
+  --accent: #a8345c;
+  --accent-ink: #fdf6f8;
+  --sky-top: #a9c4d6;
+  --shadow: rgb(20 32 28 / 0.18);
+}
+
+[data-theme="dark"] {
+  --surface: #0d1513;
+  --surface-2: #15211d;
+  --ink: #e7ece9;
+  --muted: #9caaa4;
+  --line: rgb(231 236 233 / 0.14);
+  --accent: #e68aa8;
+  --accent-ink: #1c0a11;
+  --sky-top: #060a12;
+  --shadow: rgb(0 0 0 / 0.5);
+}
+
+@theme inline {
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-accent: var(--accent);
+  --color-accent-ink: var(--accent-ink);
+  --font-display: "Outfit Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Geist Variable", ui-sans-serif, system-ui, sans-serif;
+  --radius-card: 20px;
+  --radius-field: 12px;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 88px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+body {
+  background: var(--surface);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+
+/* Sky behind the transparent WebGL canvas. The horizon matches the page surface so the scene melts into the page. */
+.hero-sky {
+  background: linear-gradient(to bottom, var(--sky-top) 0%, var(--surface) 72%);
+}
+
+.shadow-soft {
+  box-shadow: 0 24px 60px -28px var(--shadow);
+}
