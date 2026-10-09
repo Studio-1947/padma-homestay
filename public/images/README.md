@@ -5,8 +5,8 @@ exists, the site shows a random placeholder in that slot.
 
 | File            | Where it appears                          | Suggested size |
 | --------------- | ----------------------------------------- | -------------- |
-| `dhotrey.png`   | Hero (with `dhotrey-depth.png` for the 3D effect) and View section large photo. Generated from `assets-src/dhotrey.png` | 1828 wide |
-| `dhotrey-layer-back.webp`, `-middle.webp`, `-front.webp` | Parallax component layers, cut from the Dhotrey source photo by depth | 2400 wide |
+| `dhotrey.jpeg`  | Hero (with `dhotrey-depth.png` for the 3D effect) and View section large photo | 1828 wide |
+| `dhotrey-layer-back.webp`, `-middle.webp`, `-front.webp` | Parallax component layers, cut from `dhotrey.jpeg` by depth | 2400 wide |
 | `view-mid.jpg`  | View section, tall photo on the right     | 900 x 1200     |
 | `view-near.jpg` | View section, small square front photo    | 900 x 900      |
 | `room-1.jpg`    | Lotus Room (large card)                   | 1400 x 1100    |

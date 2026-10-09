@@ -4,7 +4,7 @@ import { useTexture } from "@react-three/drei";
 import * as THREE from "three";
 import type { Theme } from "../lib/theme";
 
-const PHOTO = "/images/dhotrey.png";
+const PHOTO = "/images/dhotrey.jpeg";
 // Depth map generated from the photo with Depth Anything V2 (white = near, black = far).
 const DEPTH = "/images/dhotrey-depth.png";
 

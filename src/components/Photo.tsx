@@ -3,7 +3,7 @@ import { useState } from "react";
 type PhotoProps = {
   /** File name without extension, loaded from /public/images/{name}.{format}. */
   name: string;
-  format?: "jpg" | "png";
+  format?: "jpg" | "jpeg" | "png";
   alt: string;
   width: number;
   height: number;

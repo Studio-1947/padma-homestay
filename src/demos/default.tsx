@@ -9,6 +9,12 @@ const DHOTREY_LAYERS = {
 
 export default function ParallaxDemo() {
   return (
-    <ParallaxComponent title="Dhotrey" images={DHOTREY_LAYERS} className="parallax--padma" titleMode="reveal" />
+    <ParallaxComponent
+      title="Dhotrey"
+      titleGraphicSrc="/images/DHOTREY.svg"
+      images={DHOTREY_LAYERS}
+      className="parallax--padma"
+      titleMode="reveal"
+    />
   );
 }

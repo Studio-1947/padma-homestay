@@ -1,4 +1,4 @@
-import { useLayoutEffect, useRef } from "react";
+import { type ReactNode, useLayoutEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Lenis from "lenis";
@@ -19,7 +19,7 @@ const LAYER_TRAVEL = [
  * Title travel in "reveal" mode, in percent of the viewport height. It begins close to
  * the skyline, then clears the middle layer early in the scroll.
  */
-const TITLE_REVEAL = { from: 16, to: -36 };
+const TITLE_REVEAL = { from: 34, to: -36 };
 
 const DEFAULT_IMAGES = {
   back: "https://cdn.21st.dev/assets/mirror/a4/a43f4eae3459c461345ee676f12d6e1ddca65e8a5279a5af00d475b17ff83aea.webp",
@@ -29,6 +29,8 @@ const DEFAULT_IMAGES = {
 
 type ParallaxComponentProps = {
   title?: string;
+  /** Optional wordmark or title artwork used in place of the rendered title text. */
+  titleGraphicSrc?: string;
   /** Layer images from furthest to nearest. */
   images?: { back: string; middle: string; front: string };
   /** Lenis smooth scrolling for the whole page while this component is mounted. */
@@ -40,14 +42,20 @@ type ParallaxComponentProps = {
   titleMode?: "between" | "reveal";
   /** Extra class on the root, for example a theme that overrides the --parallax-* properties. */
   className?: string;
+  id?: string;
+  /** Shown in the block under the layers. Without it that block is an empty screen of scroll room. */
+  children?: ReactNode;
 };
 
 export function ParallaxComponent({
   title = "Parallax",
+  titleGraphicSrc,
   images = DEFAULT_IMAGES,
   smoothScroll = true,
   titleMode = "between",
   className,
+  id,
+  children,
 }: ParallaxComponentProps) {
   const parallaxRef = useRef<HTMLDivElement>(null);
 
@@ -62,7 +70,8 @@ export function ParallaxComponent({
       const titleIntroDistance = Math.round(window.innerHeight * 0.18);
       const hasTitleIntro = titleMode === "reveal" && header;
 
-      // Keep the page fixed while the title rises from below to the viewport center.
+      // Keep the page fixed while the title rises from below to the viewport center. The whole
+      // stage is pinned, not just the header, so the content under it stays tucked against it.
       if (hasTitleIntro) {
         gsap.fromTo(
           "[data-parallax-title]",
@@ -74,7 +83,7 @@ export function ParallaxComponent({
               trigger: header,
               start: "top top",
               end: () => `+=${titleIntroDistance}`,
-              pin: header,
+              pin: "[data-parallax-stage]",
               scrub: 0,
               anticipatePin: 1,
               invalidateOnRefresh: true,
@@ -113,7 +122,7 @@ export function ParallaxComponent({
     let lenis: Lenis | undefined;
     const raf = (time: number) => lenis?.raf(time * 1000);
     if (smoothScroll) {
-      lenis = new Lenis();
+      lenis = new Lenis({ anchors: true });
       lenis.on("scroll", ScrollTrigger.update);
       gsap.ticker.add(raf);
       gsap.ticker.lagSmoothing(0);
@@ -121,6 +130,9 @@ export function ParallaxComponent({
 
     return () => {
       ctx.revert();
+      // Two tweens share the title, and reverting them can leave the first one's transform inline.
+      // A remount (StrictMode does one in dev) would then read it as a starting offset.
+      gsap.set(root.querySelectorAll("[data-parallax-layer]"), { clearProps: "all" });
       gsap.ticker.remove(raf);
       lenis?.destroy();
     };
@@ -128,27 +140,37 @@ export function ParallaxComponent({
 
   const titleLayer = (
     <div data-parallax-layer="3" data-parallax-title className="parallax__layer-title">
-      <h2 className="parallax__title">{title}</h2>
+      {titleGraphicSrc ? (
+        <img src={titleGraphicSrc} alt={title} className="parallax__title-graphic" />
+      ) : (
+        <h2 className="parallax__title">{title}</h2>
+      )}
     </div>
   );
 
   return (
-    <div className={className ? `parallax ${className}` : "parallax"} ref={parallaxRef}>
-      <section className="parallax__header">
-        <div className="parallax__visuals">
-          <div className="parallax__black-line-overflow"></div>
-          <div data-parallax-layers className="parallax__layers">
-            <img src={images.back} loading="eager" width="800" data-parallax-layer="1" alt="" className="parallax__layer-img" />
-            {titleMode === "reveal" && titleLayer}
-            <img src={images.middle} loading="eager" width="800" data-parallax-layer="2" alt="" className="parallax__layer-img" />
-            {titleMode === "between" && titleLayer}
-            <img src={images.front} loading="eager" width="800" data-parallax-layer="4" alt="" className="parallax__layer-img" />
+    <div id={id} className={className ? `parallax ${className}` : "parallax"} ref={parallaxRef}>
+      <div data-parallax-stage>
+        <section className="parallax__header">
+          <div className="parallax__visuals">
+            <div className="parallax__black-line-overflow"></div>
+            <div data-parallax-layers className="parallax__layers">
+              <img src={images.back} loading="eager" width="800" data-parallax-layer="1" alt="" className="parallax__layer-img" />
+              {titleMode === "reveal" && titleLayer}
+              <img src={images.middle} loading="eager" width="800" data-parallax-layer="2" alt="" className="parallax__layer-img" />
+              {titleMode === "between" && titleLayer}
+              <img src={images.front} loading="eager" width="800" data-parallax-layer="4" alt="" className="parallax__layer-img" />
+            </div>
+            <img src="/fog.svg" alt="" aria-hidden="true" className="parallax__fog" />
+            <img src="/fog.svg" alt="" aria-hidden="true" className="parallax__fog parallax__fog--dense" />
           </div>
-          <img src="/fog.svg" alt="" aria-hidden="true" className="parallax__fog" />
-          <img src="/fog.svg" alt="" aria-hidden="true" className="parallax__fog parallax__fog--dense" />
-        </div>
-      </section>
-      <section className="parallax__content" aria-hidden="true" />
+        </section>
+        {children ? (
+          <div className="parallax__content parallax__content--filled">{children}</div>
+        ) : (
+          <section className="parallax__content" aria-hidden="true" />
+        )}
+      </div>
     </div>
   );
 }

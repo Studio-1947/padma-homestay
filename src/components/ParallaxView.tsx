@@ -38,7 +38,7 @@ export function ParallaxView() {
           <motion.div style={enabled ? { scale: farScale } : undefined}>
             <Photo
               name="dhotrey"
-              format="png"
+              format="jpeg"
               alt="Snow peaks above the pine slopes and rooftops of Dhotrey"
               width={1828}
               height={860}

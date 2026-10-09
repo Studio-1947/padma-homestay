@@ -76,6 +76,13 @@
   text-align: center;
 }
 
+.parallax__title-graphic {
+  display: block;
+  width: min(65vw, 960px);
+  height: auto;
+  filter: drop-shadow(0 2px 20px rgb(8 16 28 / 0.35));
+}
+
 .parallax__black-line-overflow {
   position: absolute;
   bottom: -1px;
@@ -134,16 +141,32 @@
   padding: 6rem 1rem;
 }
 
-/* Site theme: the photo fades into the page surface instead of black. */
-.parallax--padma {
-  --parallax-bg: #fff;
-  --parallax-ink: #14201c;
-  --parallax-title: #f6f8f7;
+/* Content passed in as children sizes itself; only the empty block needs a screen of scroll room. */
+.parallax__content--filled {
+  display: block;
+  min-height: 0;
+  padding: 0;
 }
 
+/*
+  Site theme: the photo dissolves into mist, and the mist settles into the page surface.
+  --parallax-mist is the colour the fog reaches at the foot of the photo.
+*/
+.parallax--padma {
+  --parallax-bg: var(--surface, #fff);
+  --parallax-ink: var(--ink, #14201c);
+  --parallax-title: #f6f8f7;
+  --parallax-mist: #fff;
+}
+
+[data-theme="dark"] .parallax--padma {
+  --parallax-mist: #000;
+}
+
+/* The photo always fills the screen top to bottom; whatever does not fit is cropped off the sides. */
 .parallax--padma .parallax__header {
   min-height: 0;
-  aspect-ratio: 2880 / 1355;
+  height: 100svh;
 }
 
 .parallax--padma .parallax__visuals {
@@ -153,8 +176,37 @@
 .parallax--padma .parallax__layer-img {
   top: 0;
   height: 100%;
-  object-fit: contain;
-  object-position: center;
+  object-fit: cover;
+  object-position: 56% center;
+}
+
+.parallax--padma .parallax__black-line-overflow {
+  background: var(--parallax-mist);
+}
+
+/* Overlaps the photo by a pixel so no hairline of the surface shows between the two. */
+.parallax--padma .parallax__content {
+  position: relative;
+  z-index: 3;
+  margin-top: -1px;
+  background: linear-gradient(to bottom, var(--parallax-mist), var(--parallax-bg) min(12rem, 100%));
+}
+
+/* Dark mode: the same fog, turned to shadow. */
+[data-theme="dark"] .parallax--padma .parallax__fog {
+  mix-blend-mode: multiply;
+  filter: invert(1);
+}
+
+[data-theme="dark"] .parallax--padma .parallax__fog--dense {
+  filter: brightness(1.4) contrast(1.2) invert(1);
+}
+
+/* Without the scroll animation the wordmark would stay half hidden behind the trees. */
+@media (prefers-reduced-motion: reduce) {
+  .parallax--padma .parallax__layer-title {
+    transform: translateY(-36%);
+  }
 }
 
 .parallax--padma .parallax__title {
