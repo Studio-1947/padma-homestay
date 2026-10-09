@@ -37,10 +37,11 @@ export function ParallaxView() {
         >
           <motion.div style={enabled ? { scale: farScale } : undefined}>
             <Photo
-              name="view-far"
-              alt="The snow range across the valley on a clear morning"
-              width={1600}
-              height={1100}
+              name="dhotrey"
+              format="png"
+              alt="Snow peaks above the pine slopes and rooftops of Dhotrey"
+              width={1828}
+              height={860}
               className="aspect-[16/11] w-full object-cover"
             />
           </motion.div>

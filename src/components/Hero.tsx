@@ -6,7 +6,15 @@ import { useTheme } from "../lib/theme";
 import { CanvasBoundary } from "./CanvasBoundary";
 import { Photo } from "./Photo";
 
-const HeroScene = lazy(() => import("../three/HeroScene"));
+/**
+ * Which 3D scene the hero shows:
+ * "photo" = the Dhotrey photo with depth parallax, "model" = the snowy mountain model.
+ */
+const HERO_SCENE: "photo" | "model" = "photo";
+
+const HeroScene = lazy(() =>
+  HERO_SCENE === "photo" ? import("../three/PhotoDepthScene") : import("../three/HeroScene"),
+);
 
 const enter = (delay: number) => ({
   initial: { opacity: 0, y: 24 },
@@ -28,10 +36,11 @@ export function Hero() {
 
   const fallback = (
     <Photo
-      name="hero"
-      alt="Snow peaks seen from the homestay at dawn"
-      width={1920}
-      height={1200}
+      name="dhotrey"
+      format="png"
+      alt="Snow peaks above the pine slopes and rooftops of Dhotrey"
+      width={1828}
+      height={860}
       eager
       className="size-full object-cover"
     />
@@ -47,18 +56,16 @@ export function Hero() {
         </CanvasBoundary>
       </motion.div>
 
-      {/* Scrim keeps the copy readable over the ridges in both themes. */}
-      <div
-        aria-hidden
-        className="absolute inset-0 -z-10 bg-gradient-to-t from-surface/80 via-surface/30 to-transparent md:bg-gradient-to-r md:from-surface/85 md:via-surface/35"
-      />
+      {/* Fades the foot of the scene into the page. */}
+      <div aria-hidden className="absolute inset-x-0 bottom-0 -z-10 h-48 bg-gradient-to-t from-surface to-transparent" />
 
       <motion.div
         className="mx-auto w-full max-w-[1400px] px-4 pb-16 pt-24 md:px-8"
         style={reduce ? undefined : { y: textY, opacity: textOpacity }}
       >
-        <div className="max-w-2xl">
-          <motion.p {...(reduce ? {} : enter(0.1))} className="text-sm font-medium text-accent">
+        {/* Light text with a soft shadow sits directly on the photo, so no wash is needed over it. */}
+        <div className="max-w-2xl text-[#f6f8f7] [text-shadow:0_1px_18px_rgb(8_16_28/0.55)]">
+          <motion.p {...(reduce ? {} : enter(0.1))} className="text-sm font-medium">
             {site.hero.eyebrow}
           </motion.p>
           <motion.h1
@@ -67,20 +74,20 @@ export function Hero() {
           >
             {site.hero.headline}
           </motion.h1>
-          <motion.p {...(reduce ? {} : enter(0.32))} className="mt-6 max-w-[52ch] text-lg leading-relaxed text-ink/80">
+          <motion.p {...(reduce ? {} : enter(0.32))} className="mt-6 max-w-[52ch] text-lg leading-relaxed">
             {site.hero.subtext}
           </motion.p>
           <motion.div {...(reduce ? {} : enter(0.44))} className="mt-9 flex flex-wrap items-center gap-3">
             <a
               href="#booking"
-              className="inline-flex h-12 items-center gap-2 rounded-full bg-accent px-7 font-medium text-accent-ink transition-transform hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98]"
+              className="inline-flex h-12 items-center gap-2 rounded-full bg-accent px-7 font-medium text-accent-ink [text-shadow:none] transition-transform hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98]"
             >
               Check availability
               <ArrowRight size={18} weight="bold" />
             </a>
             <a
               href="#rooms"
-              className="inline-flex h-12 items-center rounded-full border border-ink/25 bg-surface/60 px-7 font-medium backdrop-blur-sm transition-colors hover:bg-surface active:scale-[0.98]"
+              className="inline-flex h-12 items-center rounded-full border border-white/60 bg-[#08101c]/30 px-7 font-medium backdrop-blur-sm transition-colors hover:bg-[#08101c]/50 active:scale-[0.98]"
             >
               See the rooms
             </a>

@@ -30,18 +30,18 @@ export const site = {
   isSample: true,
 
   name: "Padma Homestay",
-  region: "the Himalayan hills", // SAMPLE: replace with the town and district
-  address: "Village road, Himalayan hills, India", // SAMPLE
-  mapsUrl: "https://maps.google.com/?q=Himalayan+hills", // SAMPLE
+  region: "Dhotrey, West Bengal",
+  address: "Dhotrey, West Bengal 734221, India",
+  mapsUrl: "https://www.google.com/maps?q=27.049883,88.113692",
   phoneDisplay: "+91 7047078852", // SAMPLE
-  phoneHref: "tel:+91 7047078852", // SAMPLE
+  phoneHref: "tel:+917047078852", // SAMPLE
   email: "hello@example.com", // SAMPLE
   /** WhatsApp number in international format, digits only. SAMPLE */
   whatsappNumber: "917047078852",
   currency: "INR",
 
   hero: {
-    eyebrow: "Family-run homestay in the Himalayan hills",
+    eyebrow: "Family-run homestay in Dhotrey, West Bengal",
     headline: "Wake up above the clouds.",
     subtext:
       "Three quiet rooms, home-cooked meals and a terrace that faces the snow line. Come for a weekend, stay a week.",
