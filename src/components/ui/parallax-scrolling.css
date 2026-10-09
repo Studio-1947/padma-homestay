@@ -88,22 +88,41 @@
 
 .parallax__fog {
   position: absolute;
-  right: 0;
+  right: auto;
   bottom: 0;
-  left: 0;
+  left: -6%;
   z-index: 30;
-  width: 100%;
+  width: 112%;
+  max-width: none;
   height: 46%;
   pointer-events: none;
   object-fit: cover;
   object-position: center 72%;
   opacity: 1;
   mix-blend-mode: screen;
-  transform: translateY(24%);
+  animation: fog-drift 10s ease-in-out infinite alternate;
+  will-change: transform;
 }
 
 .parallax__fog--dense {
   filter: brightness(1.4) contrast(1.2);
+}
+
+@keyframes fog-drift {
+  from {
+    transform: translateX(-3%) translateY(4%);
+  }
+
+  to {
+    transform: translateX(3%) translateY(4%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .parallax__fog {
+    animation: none;
+    transform: translateY(4%);
+  }
 }
 
 .parallax__content {

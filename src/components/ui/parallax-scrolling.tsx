@@ -55,31 +55,58 @@ export function ParallaxComponent({
   useLayoutEffect(() => {
     const root = parallaxRef.current;
     if (!root || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const header = root.querySelector<HTMLElement>(".parallax__header");
 
     // gsap.context scopes the selectors and lets cleanup revert only the animations made here.
     const ctx = gsap.context(() => {
+      const titleIntroDistance = Math.round(window.innerHeight * 0.18);
+      const hasTitleIntro = titleMode === "reveal" && header;
+
+      // Keep the page fixed while the title rises from below to the viewport center.
+      if (hasTitleIntro) {
+        gsap.fromTo(
+          "[data-parallax-title]",
+          { yPercent: TITLE_REVEAL.from },
+          {
+            yPercent: 0,
+            ease: "none",
+            scrollTrigger: {
+              trigger: header,
+              start: "top top",
+              end: () => `+=${titleIntroDistance}`,
+              pin: header,
+              scrub: 0,
+              anticipatePin: 1,
+              invalidateOnRefresh: true,
+            },
+          },
+        );
+      }
+
+      const mainStart = hasTitleIntro ? `top top-=${titleIntroDistance}` : "top top";
+      const mainEnd = hasTitleIntro ? `bottom top-=${titleIntroDistance}` : "bottom top";
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: "[data-parallax-layers]",
-          start: "0% 0%",
-          end: "100% 0%",
+          start: mainStart,
+          end: mainEnd,
           scrub: 0,
         },
       });
 
-      LAYER_TRAVEL.forEach(({ layer, yPercent }, idx) => {
+      if (titleMode === "reveal") {
+        tl.fromTo(
+          "[data-parallax-title]",
+          { yPercent: 0 },
+          { yPercent: TITLE_REVEAL.to, duration: 0.32, ease: "none" },
+        );
+      } else {
+        tl.to("[data-parallax-title]", { yPercent: 40, duration: 0.5, ease: "none" });
+      }
+
+      LAYER_TRAVEL.filter(({ layer }) => layer !== "3").forEach(({ layer, yPercent }) => {
         const target = `[data-parallax-layer="${layer}"]`;
-        const position = idx === 0 ? undefined : "<";
-        if (layer === "3" && titleMode === "reveal") {
-          tl.fromTo(
-            target,
-            { yPercent: TITLE_REVEAL.from },
-            { yPercent: TITLE_REVEAL.to, duration: 0.32, ease: "none" },
-            position,
-          );
-        } else {
-          tl.to(target, { yPercent, ease: "none" }, position);
-        }
+        tl.to(target, { yPercent, duration: 0.5, ease: "none" }, 0);
       });
     }, root);
 
@@ -100,7 +127,7 @@ export function ParallaxComponent({
   }, [smoothScroll, titleMode]);
 
   const titleLayer = (
-    <div data-parallax-layer="3" className="parallax__layer-title">
+    <div data-parallax-layer="3" data-parallax-title className="parallax__layer-title">
       <h2 className="parallax__title">{title}</h2>
     </div>
   );
