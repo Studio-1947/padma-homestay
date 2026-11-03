@@ -4,15 +4,15 @@ import { Reveal } from "./Reveal";
 
 export function Day() {
   return (
-    <section id="day" className="mx-auto max-w-[1400px] px-4 py-24 md:px-8 md:py-32">
+    <section id="day" className="mx-auto max-w-[1400px] px-4 py-20 md:px-8 md:py-28">
       {/* The photo and heading stay pinned on desktop while the day scrolls past. */}
       <div className="grid grid-cols-1 gap-12 md:grid-cols-[1fr_1.1fr] md:gap-20">
         <div className="md:sticky md:top-28 md:self-start">
           <Reveal>
-            <h2 className="font-display text-4xl font-semibold leading-[1.05] tracking-tighter md:text-6xl">
+            <h2 className="font-display text-4xl font-semibold leading-[1.05] tracking-tighter md:text-5xl">
               {site.day.headline}
             </h2>
-            <p className="mt-5 max-w-[44ch] text-lg leading-relaxed text-muted">{site.day.body}</p>
+            <p className="mt-4 max-w-[44ch] text-lg leading-relaxed text-muted">{site.day.body}</p>
             <Photo
               name="day"
               alt="Morning tea on the terrace"
@@ -23,12 +23,12 @@ export function Day() {
           </Reveal>
         </div>
 
-        <ol className="md:pt-[30vh]">
+        <ol className="md:pt-[18vh]">
           {site.day.moments.map((moment) => (
-            <li key={moment.time} className="py-10 md:py-[14vh]">
+            <li key={moment.time} className="border-t border-line py-8 first:border-t-0 md:py-[9vh]">
               <Reveal>
                 <p className="font-display text-xl font-medium text-accent">{moment.time}</p>
-                <p className="mt-3 max-w-[20ch] font-display text-3xl font-medium leading-[1.15] tracking-tight md:text-5xl">
+                <p className="mt-3 max-w-[20ch] font-display text-3xl font-medium leading-[1.15] tracking-tight md:text-4xl">
                   {moment.body}
                 </p>
               </Reveal>

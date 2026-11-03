@@ -43,6 +43,8 @@ type ParallaxComponentProps = {
   /** Extra class on the root, for example a theme that overrides the --parallax-* properties. */
   className?: string;
   id?: string;
+  /** Sits on top of the layers and scrolls away with them, for example a logo. */
+  overlay?: ReactNode;
   /** Shown in the block under the layers. Without it that block is an empty screen of scroll room. */
   children?: ReactNode;
 };
@@ -55,6 +57,7 @@ export function ParallaxComponent({
   titleMode = "between",
   className,
   id,
+  overlay,
   children,
 }: ParallaxComponentProps) {
   const parallaxRef = useRef<HTMLDivElement>(null);
@@ -162,8 +165,10 @@ export function ParallaxComponent({
               <img src={images.front} loading="eager" width="800" data-parallax-layer="4" alt="" className="parallax__layer-img" />
             </div>
             <img src="/fog.svg" alt="" aria-hidden="true" className="parallax__fog" />
+            <img src="/fog.svg" alt="" aria-hidden="true" className="parallax__fog" />
             <img src="/fog.svg" alt="" aria-hidden="true" className="parallax__fog parallax__fog--dense" />
           </div>
+          {overlay && <div className="parallax__overlay">{overlay}</div>}
         </section>
         {children ? (
           <div className="parallax__content parallax__content--filled">{children}</div>

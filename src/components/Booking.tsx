@@ -1,6 +1,7 @@
-import { useId, useState, type FormEvent, type ReactNode } from "react";
-import { EnvelopeSimple, MapPin, Phone, WhatsappLogo } from "@phosphor-icons/react";
+import { useEffect, useId, useState, type FormEvent, type ReactNode } from "react";
+import { EnvelopeSimpleIcon, MapPinIcon, PhoneIcon, WhatsappLogoIcon } from "@phosphor-icons/react";
 import { site } from "../content/site";
+import { onRoomChosen } from "../lib/booking";
 import { Reveal } from "./Reveal";
 
 type Fields = {
@@ -87,6 +88,9 @@ export function Booking() {
   const [errors, setErrors] = useState<Errors>({});
   const [sentUrl, setSentUrl] = useState<string | null>(null);
 
+  // A room card further up can pick the room for the guest.
+  useEffect(() => onRoomChosen((room) => setFields((current) => ({ ...current, room }))), []);
+
   const set = (key: keyof Fields) => (event: { target: { value: string } }) => {
     setFields((current) => ({ ...current, [key]: event.target.value }));
     setErrors((current) => ({ ...current, [key]: undefined }));
@@ -104,24 +108,24 @@ export function Booking() {
   };
 
   return (
-    <section id="booking" className="mx-auto max-w-[1400px] px-4 py-24 md:px-8 md:py-32">
-      <div className="grid grid-cols-1 gap-12 rounded-[20px] bg-surface-2 p-6 md:grid-cols-[1fr_1.15fr] md:gap-16 md:p-14">
+    <section id="booking" className="mx-auto max-w-[1400px] px-4 py-20 md:px-8 md:py-28">
+      <div className="grid grid-cols-1 gap-12 rounded-[20px] bg-surface-2 p-6 md:grid-cols-[1fr_1.15fr] md:gap-16 md:p-12">
         <Reveal>
-          <h2 className="font-display text-4xl font-semibold leading-[1.05] tracking-tighter md:text-6xl">
+          <h2 className="font-display text-4xl font-semibold leading-[1.05] tracking-tighter md:text-5xl">
             {site.booking.headline}
           </h2>
-          <p className="mt-5 max-w-[40ch] text-lg leading-relaxed text-muted">{site.booking.body}</p>
+          <p className="mt-4 max-w-[40ch] text-lg leading-relaxed text-muted">{site.booking.body}</p>
 
           <ul className="mt-10 space-y-4">
             <li>
               <a href={site.phoneHref} className="inline-flex items-center gap-3 hover:text-accent">
-                <Phone size={20} className="text-accent" />
+                <PhoneIcon size={20} className="text-accent" />
                 {site.phoneDisplay}
               </a>
             </li>
             <li>
               <a href={`mailto:${site.email}`} className="inline-flex items-center gap-3 hover:text-accent">
-                <EnvelopeSimple size={20} className="text-accent" />
+                <EnvelopeSimpleIcon size={20} className="text-accent" />
                 {site.email}
               </a>
             </li>
@@ -132,7 +136,7 @@ export function Booking() {
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-3 hover:text-accent"
               >
-                <MapPin size={20} className="shrink-0 text-accent" />
+                <MapPinIcon size={20} className="shrink-0 text-accent" />
                 {site.address}
               </a>
             </li>
@@ -209,7 +213,7 @@ export function Booking() {
                 type="submit"
                 className="inline-flex h-12 items-center gap-2 rounded-full bg-accent px-7 font-medium text-accent-ink transition-transform hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98]"
               >
-                <WhatsappLogo size={20} weight="fill" />
+                <WhatsappLogoIcon size={20} weight="fill" />
                 Send on WhatsApp
               </button>
               <p aria-live="polite" className="mt-4 min-h-6 text-sm text-muted">

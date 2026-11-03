@@ -1,47 +1,72 @@
+import { ArrowUpRightIcon } from "@phosphor-icons/react";
 import { navLinks, site } from "../content/site";
+
+const heading = "text-sm font-medium text-muted";
+const link = "transition-colors hover:text-accent";
 
 export function Footer() {
   return (
-    <footer className="mx-auto max-w-[1400px] px-4 pb-10 pt-8 md:px-8">
-      <div className="flex flex-col gap-6 border-t border-line pt-8 md:flex-row md:items-center md:justify-between">
+    <footer className="mx-auto max-w-[1400px] px-4 pb-10 pt-4 md:px-8">
+      <div className="grid gap-10 border-t border-line pt-12 md:grid-cols-[1.4fr_1fr_1fr_1fr] md:gap-8">
         <div>
-          <p className="font-display text-xl font-semibold tracking-tight">{site.name}</p>
-          <p className="mt-1 text-sm text-muted">{site.address}</p>
+          <p className="font-display text-3xl font-semibold tracking-tight">{site.name}</p>
+          <p className="mt-3 max-w-[32ch] leading-relaxed text-muted">
+            A family home with three guest rooms, on the trail into Singalila National Park.
+          </p>
         </div>
-        <ul className="flex flex-wrap gap-x-6 gap-y-2 text-sm">
-          {navLinks.map((link) => (
-            <li key={link.href}>
-              <a href={link.href} className="text-muted transition-colors hover:text-ink">
-                {link.label}
+
+        {/* Two columns of links on phones fold into the grid from md. */}
+        <div>
+          <p className={heading}>Explore</p>
+          <ul className="mt-4 space-y-2.5">
+            {navLinks.map((item) => (
+              <li key={item.href}>
+                <a href={item.href} className={link}>
+                  {item.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div>
+          <p className={heading}>Contact</p>
+          <ul className="mt-4 space-y-2.5">
+            <li>
+              <a href={site.phoneHref} className={link}>
+                {site.phoneDisplay}
               </a>
             </li>
-          ))}
-        </ul>
-        <p className="text-sm text-muted">
-          &copy; {new Date().getFullYear()} {site.name}
-        </p>
+            <li>
+              <a href={`mailto:${site.email}`} className={link}>
+                {site.email}
+              </a>
+            </li>
+            <li>
+              <a href={`https://wa.me/${site.whatsappNumber}`} target="_blank" rel="noopener noreferrer" className={link}>
+                WhatsApp
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <div>
+          <p className={heading}>Visit</p>
+          <address className="mt-4 not-italic leading-relaxed">{site.address}</address>
+          <a
+            href={site.mapsUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={`mt-2.5 inline-flex items-center gap-1 ${link}`}
+          >
+            Directions
+            <ArrowUpRightIcon size={16} />
+          </a>
+        </div>
       </div>
-      {/* Attribution required by the CC BY 4.0 licence of the hero mountain model. */}
-      <p className="mt-6 text-xs text-muted">
-        Mountain model:{" "}
-        <a
-          href="https://sketchfab.com/3d-models/snowy-mountain-terrain-9fa3c56fd32746bcb0e06cd2c4229ca0"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="underline hover:text-ink"
-        >
-          Snowy Mountain - Terrain
-        </a>{" "}
-        by artfromheath, licensed under{" "}
-        <a
-          href="https://creativecommons.org/licenses/by/4.0/"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="underline hover:text-ink"
-        >
-          CC BY 4.0
-        </a>
-        .
+
+      <p className="mt-14 text-sm text-muted">
+        &copy; {new Date().getFullYear()} {site.name}
       </p>
     </footer>
   );

@@ -1,9 +1,11 @@
 import type { PointerEvent } from "react";
 import { motion, useMotionValue, useReducedMotion, useSpring, useTransform } from "motion/react";
-import { Bed, Users } from "@phosphor-icons/react";
+import { ArrowRightIcon, BedIcon, UsersIcon } from "@phosphor-icons/react";
 import { formatPrice, site, type Room } from "../content/site";
+import { chooseRoom } from "../lib/booking";
 import { Photo } from "./Photo";
 import { Reveal } from "./Reveal";
+import { SectionIntro } from "./SectionIntro";
 
 const SPRING = { stiffness: 140, damping: 18, mass: 0.6 };
 
@@ -48,7 +50,8 @@ function RoomCard({ room, featured }: { room: Room; featured: boolean }) {
         </motion.div>
       </div>
 
-      <div className="p-6 md:p-7">
+      {/* The featured photo takes the spare height; on the smaller cards the text does, so their links line up. */}
+      <div className={`flex flex-col p-6 md:p-7 ${featured ? "" : "flex-1"}`}>
         <div className="flex items-baseline justify-between gap-4">
           <h3 className={`font-display font-semibold tracking-tight ${featured ? "text-3xl" : "text-2xl"}`}>
             {room.name}
@@ -58,16 +61,26 @@ function RoomCard({ room, featured }: { room: Room; featured: boolean }) {
           </p>
         </div>
         <p className="mt-2 max-w-[52ch] leading-relaxed text-muted">{room.summary}</p>
-        <ul className="mt-4 flex flex-wrap gap-x-5 gap-y-2 text-sm">
-          <li className="flex items-center gap-2">
-            <Users size={18} className="text-accent" />
-            Sleeps {room.sleeps}
-          </li>
-          <li className="flex items-center gap-2">
-            <Bed size={18} className="text-accent" />
-            {room.bed}
-          </li>
-        </ul>
+        <div className="mt-auto flex flex-wrap items-center justify-between gap-x-6 gap-y-4 pt-5">
+          <ul className="flex flex-wrap gap-x-5 gap-y-2 text-sm">
+            <li className="flex items-center gap-2">
+              <UsersIcon size={18} className="text-accent" />
+              Sleeps {room.sleeps}
+            </li>
+            <li className="flex items-center gap-2">
+              <BedIcon size={18} className="text-accent" />
+              {room.bed}
+            </li>
+          </ul>
+          <a
+            href="#booking"
+            onClick={() => chooseRoom(room.name)}
+            className="group/link inline-flex items-center gap-1.5 text-sm font-medium text-accent"
+          >
+            Check availability
+            <ArrowRightIcon size={16} className="transition-transform group-hover/link:translate-x-0.5" />
+          </a>
+        </div>
       </div>
     </motion.article>
   );
@@ -77,16 +90,11 @@ export function Rooms() {
   const [featured, ...others] = site.rooms.items;
 
   return (
-    <section id="rooms" className="mx-auto max-w-[1400px] px-4 py-24 md:px-8 md:py-32">
-      <Reveal>
-        <h2 className="font-display text-4xl font-semibold leading-[1.05] tracking-tighter md:text-6xl">
-          {site.rooms.headline}
-        </h2>
-        <p className="mt-5 max-w-[52ch] text-lg leading-relaxed text-muted">{site.rooms.body}</p>
-      </Reveal>
+    <section id="rooms" className="mx-auto max-w-[1400px] px-4 py-20 md:px-8 md:py-28">
+      <SectionIntro headline={site.rooms.headline} body={site.rooms.body} />
 
       {/* One large room beside two stacked rooms. Collapses to a single column below md. */}
-      <div className="mt-12 grid grid-cols-1 gap-5 md:mt-16 md:grid-cols-[1.35fr_1fr] md:grid-rows-2">
+      <div className="mt-12 grid grid-cols-1 gap-4 md:mt-14 md:grid-cols-[1.35fr_1fr] md:grid-rows-2">
         <Reveal className="md:row-span-2">
           <RoomCard room={featured} featured />
         </Reveal>

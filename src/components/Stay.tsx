@@ -46,16 +46,16 @@ function FlagsTile() {
 
 export function Stay() {
   return (
-    <section id="stay" className="mx-auto max-w-[1400px] px-4 py-24 md:px-8 md:py-32">
+    <section id="stay" className="mx-auto max-w-[1400px] px-4 py-20 md:px-8 md:py-28">
       <Reveal className="md:text-center">
-        <h2 className="font-display text-4xl font-semibold leading-[1.05] tracking-tighter md:text-6xl">
+        <h2 className="font-display text-4xl font-semibold leading-[1.05] tracking-tighter md:text-5xl">
           {site.stay.headline}
         </h2>
-        <p className="mt-5 text-lg leading-relaxed text-muted md:mx-auto md:max-w-[48ch]">{site.stay.body}</p>
+        <p className="mt-4 text-lg leading-relaxed text-muted md:mx-auto md:max-w-[48ch]">{site.stay.body}</p>
       </Reveal>
 
       {/* Five amenities, five cells. Single column below md. */}
-      <div className="mt-12 grid grid-cols-1 gap-5 md:mt-16 md:grid-cols-6">
+      <div className="mt-12 grid grid-cols-1 gap-4 md:mt-14 md:grid-cols-6">
         <Reveal className="md:col-span-4">
           <article className="relative isolate flex h-full min-h-[22rem] items-end overflow-hidden rounded-[20px]">
             <Photo

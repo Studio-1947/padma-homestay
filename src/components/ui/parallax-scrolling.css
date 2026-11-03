@@ -83,6 +83,17 @@
   filter: drop-shadow(0 2px 20px rgb(8 16 28 / 0.35));
 }
 
+.parallax__overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 40;
+  pointer-events: none;
+}
+
+.parallax__overlay > * {
+  pointer-events: auto;
+}
+
 .parallax__black-line-overflow {
   position: absolute;
   bottom: -1px;
@@ -180,7 +191,18 @@
   object-position: 56% center;
 }
 
-.parallax--padma .parallax__black-line-overflow {
+.parallax--padma .parallax__overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 40;
+  pointer-events: none;
+}
+
+.parallax__overlay > * {
+  pointer-events: auto;
+}
+
+.parallax__black-line-overflow {
   background: var(--parallax-mist);
 }
 

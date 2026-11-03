@@ -1,0 +1,9 @@
+{
+  // Tailwind v4 at-rules (@theme, @custom-variant) are unknown to VS Code's plain CSS checker.
+  // The Tailwind CSS extension's own language mode understands them.
+  "files.associations": {
+    "*.css": "tailwindcss"
+  },
+  // Backup for when a file is still open in the plain CSS mode: don't flag at-rules it doesn't know.
+  "css.lint.unknownAtRules": "ignore"
+}

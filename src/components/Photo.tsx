@@ -3,7 +3,7 @@ import { useState } from "react";
 type PhotoProps = {
   /** File name without extension, loaded from /public/images/{name}.{format}. */
   name: string;
-  format?: "jpg" | "jpeg" | "png";
+  format?: "jpg" | "jpeg" | "png" | "webp";
   alt: string;
   width: number;
   height: number;
@@ -12,14 +12,44 @@ type PhotoProps = {
 };
 
 /**
+ * Stand-in photos (picsum.photos ids) picked to look like the hills, so the page reads
+ * right before the real photos arrive. A slot not listed here gets a random one.
+ */
+const PLACEHOLDER_ID: Record<string, number> = {
+  "room-1": 1008,
+  "room-2": 76,
+  "room-3": 1006,
+  meals: 1060,
+  walks: 1044,
+  day: 1064,
+  "gallery-1": 17,
+  "gallery-2": 29,
+  "gallery-3": 1080,
+  "gallery-4": 82,
+  "gallery-5": 1037,
+  "gallery-6": 1059,
+  "gallery-7": 1045,
+  "nearby-tonglu": 1018,
+  "nearby-singalila": 1021,
+  "nearby-sandakphu": 1036,
+  "nearby-tumling": 11,
+  "nearby-maneybhanjang": 1043,
+};
+
+function placeholder(name: string, width: number, height: number) {
+  const id = PLACEHOLDER_ID[name];
+  return id === undefined
+    ? `https://picsum.photos/seed/padma-${name}/${width}/${height}`
+    : `https://picsum.photos/id/${id}/${width}/${height}`;
+}
+
+/**
  * Loads a real photo from /public/images. Until that file exists it falls
- * back to a seeded placeholder, so every slot is filled during development.
+ * back to a placeholder, so every slot is filled during development.
  */
 export function Photo({ name, format = "jpg", alt, width, height, className, eager = false }: PhotoProps) {
   const [missing, setMissing] = useState(false);
-  const src = missing
-    ? `https://picsum.photos/seed/padma-${name}/${width}/${height}`
-    : `/images/${name}.${format}`;
+  const src = missing ? placeholder(name, width, height) : `/images/${name}.${format}`;
 
   return (
     <img

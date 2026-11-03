@@ -1,9 +1,15 @@
 import { Nav } from "./components/Nav";
 import { Hero } from "./components/Hero";
+import { Intro } from "./components/Intro";
 import { ParallaxView } from "./components/ParallaxView";
 import { Rooms } from "./components/Rooms";
 import { Stay } from "./components/Stay";
 import { Day } from "./components/Day";
+import { Gallery } from "./components/Gallery";
+import { Reviews } from "./components/Reviews";
+import { Nearby } from "./components/Nearby";
+import { Location } from "./components/Location";
+import { Faq } from "./components/Faq";
 import { Booking } from "./components/Booking";
 import { Footer } from "./components/Footer";
 import { SampleRibbon } from "./components/SampleRibbon";
@@ -20,10 +26,16 @@ export default function App() {
       <Nav />
       <main id="main">
         <Hero />
+        <Intro />
         <ParallaxView />
         <Rooms />
         <Stay />
         <Day />
+        <Gallery />
+        <Reviews />
+        <Nearby />
+        <Location />
+        <Faq />
         <Booking />
       </main>
       <Footer />
