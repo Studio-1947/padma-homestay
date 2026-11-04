@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { List, Moon, Sun, X } from "@phosphor-icons/react";
 import { navLinks, site } from "../content/site";
-import { useTheme } from "../lib/theme";
+import { DARK_MODE_ENABLED, useTheme } from "../lib/theme";
 
 /** True once the hero has scrolled up out of the way. The hero shows only the logo, so the bar waits for this. */
 function usePastHero() {
@@ -15,9 +15,12 @@ function usePastHero() {
       return;
     }
     // The top margin is the bar's own height, so it arrives as the last of the hero leaves.
-    const observer = new IntersectionObserver(([entry]) => setPast(!entry.isIntersecting), {
-      rootMargin: "-80px 0px 0px 0px",
-    });
+    const observer = new IntersectionObserver(
+      ([entry]) => setPast(!entry.isIntersecting),
+      {
+        rootMargin: "-80px 0px 0px 0px",
+      },
+    );
     observer.observe(hero);
     return () => observer.disconnect();
   }, []);
@@ -49,14 +52,20 @@ export function Nav() {
             aria-label="Main"
             className="mx-auto flex h-14 max-w-[1400px] items-center justify-between rounded-full border border-line bg-surface/75 pl-5 pr-2 backdrop-blur-xl"
           >
-            <a href="#top" className="font-display text-lg font-semibold tracking-tight">
+            <a
+              href="#top"
+              className="font-display text-lg font-semibold tracking-tight"
+            >
               {site.name}
             </a>
 
             <ul className="hidden items-center gap-7 text-sm md:flex">
               {navLinks.map((link) => (
                 <li key={link.href}>
-                  <a href={link.href} className="text-muted transition-colors hover:text-ink">
+                  <a
+                    href={link.href}
+                    className="text-muted transition-colors hover:text-ink"
+                  >
                     {link.label}
                   </a>
                 </li>
@@ -64,14 +73,20 @@ export function Nav() {
             </ul>
 
             <div className="flex items-center gap-1.5">
-              <button
-                type="button"
-                onClick={toggleTheme}
-                aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
-                className="grid size-10 place-items-center rounded-full text-ink transition-colors hover:bg-ink/10 active:scale-[0.96]"
-              >
-                {theme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
-              </button>
+              {DARK_MODE_ENABLED && (
+                <button
+                  type="button"
+                  onClick={toggleTheme}
+                  aria-label={
+                    theme === "dark"
+                      ? "Switch to light mode"
+                      : "Switch to dark mode"
+                  }
+                  className="grid size-10 place-items-center rounded-full text-ink transition-colors hover:bg-ink/10 active:scale-[0.96]"
+                >
+                  {theme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
+                </button>
+              )}
               <a
                 href="#booking"
                 className="hidden h-10 items-center rounded-full bg-accent px-5 text-sm font-medium text-accent-ink transition-transform active:scale-[0.98] sm:inline-flex"
@@ -101,7 +116,10 @@ export function Nav() {
                 transition={{ duration: 0.2 }}
                 className="mx-auto mt-2 max-w-[1400px] rounded-[20px] border border-line bg-surface p-2 md:hidden"
               >
-                {[...navLinks, { href: "#booking", label: "Check availability" }].map((link) => (
+                {[
+                  ...navLinks,
+                  { href: "#booking", label: "Check availability" },
+                ].map((link) => (
                   <li key={link.label}>
                     <a
                       href={link.href}

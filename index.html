@@ -10,17 +10,12 @@
     />
     <meta name="theme-color" content="#edf0ee" />
     <script>
-      // Resolve the theme before first paint so the page never flashes the wrong mode.
-      (function () {
-        var stored = null;
-        try {
-          stored = localStorage.getItem("padma-theme");
-        } catch (e) {}
-        var dark = stored
-          ? stored === "dark"
-          : window.matchMedia("(prefers-color-scheme: dark)").matches;
-        document.documentElement.dataset.theme = dark ? "dark" : "light";
-      })();
+      // Dark mode is off for now (DARK_MODE_ENABLED in src/lib/theme.ts), so always light.
+      // To bring it back, replace the line below with the saved-or-system choice:
+      //   var stored = localStorage.getItem("padma-theme");
+      //   var dark = stored ? stored === "dark" : matchMedia("(prefers-color-scheme: dark)").matches;
+      //   document.documentElement.dataset.theme = dark ? "dark" : "light";
+      document.documentElement.dataset.theme = "light";
     </script>
   </head>
   <body>
