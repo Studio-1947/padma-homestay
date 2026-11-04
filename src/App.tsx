@@ -3,6 +3,7 @@ import { Hero } from "./components/Hero";
 import { Intro } from "./components/Intro";
 import { ParallaxView } from "./components/ParallaxView";
 import { Rooms } from "./components/Rooms";
+import { Amenities } from "./components/Amenities";
 import { Food } from "./components/Food";
 import { Gallery } from "./components/Gallery";
 import { Reviews } from "./components/Reviews";
@@ -28,6 +29,7 @@ export default function App() {
         <Intro />
         <ParallaxView />
         <Rooms />
+        <Amenities />
         <Food />
         <Gallery />
         <Reviews />

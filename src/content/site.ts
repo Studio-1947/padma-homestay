@@ -27,6 +27,12 @@ export type RoomType = {
 
 export type MenuItem = { name: string; contents: string; price: number; image: string; alt: string };
 
+export type Amenity = {
+  id: "hotWater" | "campfire" | "trekking" | "sightseeing" | "pickup";
+  title: string;
+  body: string;
+};
+
 /** A photo in /public/images/food (webp). */
 export type FoodPhoto = { image: string; alt: string; width: number; height: number };
 
@@ -163,6 +169,19 @@ export const site = {
         ],
       },
     ] satisfies RoomType[],
+  },
+
+  // The facilities listed on the old site. SAMPLE: the one-line descriptions are new, check them.
+  amenities: {
+    headline: "The essentials, sorted.",
+    body: "Warm water, a fire at night, and help getting to the hills and back.",
+    items: [
+      { id: "hotWater", title: "Hot water", body: "Hot water in every room, whatever the weather outside." },
+      { id: "campfire", title: "Campfire", body: "A fire outside on cold evenings, under more stars than you have seen." },
+      { id: "trekking", title: "Trekking", body: "Help planning treks to Tonglu, Tumling and Sandakphu on the Singalila trail." },
+      { id: "sightseeing", title: "Local sightseeing", body: "Day trips to the viewpoints, monasteries and villages around Dhotrey." },
+      { id: "pickup", title: "Pickup and drop", body: "A car from Bagdogra, NJP, Darjeeling or Maneybhanjang, and back again." },
+    ] satisfies Amenity[],
   },
 
   // From the old site's "Our Fooding" list.
@@ -374,6 +393,7 @@ export const site = {
 
 export const navLinks = [
   { href: "#rooms", label: "Rooms" },
+  { href: "#amenities", label: "Amenities" },
   { href: "#food", label: "Food" },
   { href: "#gallery", label: "Gallery" },
   { href: "#getting-here", label: "Getting here" },
