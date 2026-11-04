@@ -16,19 +16,6 @@ type PhotoProps = {
  * right before the real photos arrive. A slot not listed here gets a random one.
  */
 const PLACEHOLDER_ID: Record<string, number> = {
-  "room-1": 1008,
-  "room-2": 76,
-  "room-3": 1006,
-  meals: 1060,
-  walks: 1044,
-  day: 1064,
-  "gallery-1": 17,
-  "gallery-2": 29,
-  "gallery-3": 1080,
-  "gallery-4": 82,
-  "gallery-5": 1037,
-  "gallery-6": 1059,
-  "gallery-7": 1045,
   "nearby-tonglu": 1018,
   "nearby-singalila": 1021,
   "nearby-sandakphu": 1036,

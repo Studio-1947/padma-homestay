@@ -1,109 +1,192 @@
-import type { PointerEvent } from "react";
-import { motion, useMotionValue, useReducedMotion, useSpring, useTransform } from "motion/react";
-import { ArrowRightIcon, BedIcon, UsersIcon } from "@phosphor-icons/react";
-import { formatPrice, site, type Room } from "../content/site";
+import { useState } from "react";
+import { AnimatePresence, motion, useReducedMotion } from "motion/react";
+import { ArrowRightIcon, BedIcon, CheckIcon, MountainsIcon, UsersIcon } from "@phosphor-icons/react";
+import { formatPrice, site, type Room, type RoomType } from "../content/site";
 import { chooseRoom } from "../lib/booking";
 import { Photo } from "./Photo";
 import { Reveal } from "./Reveal";
 import { SectionIntro } from "./SectionIntro";
 
-const SPRING = { stiffness: 140, damping: 18, mass: 0.6 };
+const types = site.rooms.types;
 
-/** Card that tilts toward the pointer while its photo shifts the other way, for a sense of depth. */
-function RoomCard({ room, featured }: { room: Room; featured: boolean }) {
+function describe(room: Room) {
+  const parts = [room.floor, room.view ? "with a view" : null].filter(Boolean).join(", ");
+  return parts ? parts[0].toUpperCase() + parts.slice(1) : "Standard room";
+}
+
+function priceRange(type: RoomType) {
+  const prices = type.rooms.map((room) => room.price);
+  const low = Math.min(...prices);
+  const high = Math.max(...prices);
+  return low === high ? formatPrice(low) : `${formatPrice(low)} to ${formatPrice(high)}`;
+}
+
+/** One room size: a big photo with every room of that size as thumbnails, beside the facts that matter for booking. */
+function TypePanel({ type }: { type: RoomType }) {
   const reduce = useReducedMotion();
-  const pointerX = useMotionValue(0);
-  const pointerY = useMotionValue(0);
-  const rotateX = useSpring(useTransform(pointerY, [-0.5, 0.5], [5, -5]), SPRING);
-  const rotateY = useSpring(useTransform(pointerX, [-0.5, 0.5], [-5, 5]), SPRING);
-  const imageX = useSpring(useTransform(pointerX, [-0.5, 0.5], [14, -14]), SPRING);
-  const imageY = useSpring(useTransform(pointerY, [-0.5, 0.5], [14, -14]), SPRING);
-
-  const onPointerMove = (event: PointerEvent<HTMLElement>) => {
-    if (reduce || event.pointerType !== "mouse") return;
-    const rect = event.currentTarget.getBoundingClientRect();
-    pointerX.set((event.clientX - rect.left) / rect.width - 0.5);
-    pointerY.set((event.clientY - rect.top) / rect.height - 0.5);
-  };
-
-  const onPointerLeave = () => {
-    pointerX.set(0);
-    pointerY.set(0);
-  };
+  const [selected, setSelected] = useState(0);
+  const room = type.rooms[selected];
+  const views = type.rooms.filter((r) => r.view).length;
 
   return (
-    <motion.article
-      onPointerMove={onPointerMove}
-      onPointerLeave={onPointerLeave}
-      style={reduce ? undefined : { rotateX, rotateY, transformPerspective: 1100 }}
-      className="flex h-full flex-col overflow-hidden rounded-[20px] border border-line bg-surface-2"
-    >
-      <div className={`overflow-hidden ${featured ? "min-h-64 flex-1" : "aspect-[16/9]"}`}>
-        <motion.div className="size-full" style={reduce ? undefined : { x: imageX, y: imageY, scale: 1.1 }}>
-          <Photo
-            name={room.image}
-            alt={`${room.name} at ${site.name}`}
-            width={featured ? 1400 : 1000}
-            height={featured ? 1100 : 600}
-            className="size-full object-cover"
-          />
-        </motion.div>
+    <div className="grid gap-8 md:grid-cols-[1.55fr_1fr] md:gap-12">
+      <div>
+        <div className="relative overflow-hidden rounded-[20px] bg-surface-2">
+          <AnimatePresence initial={false} mode="popLayout">
+            <motion.div
+              key={room.image}
+              initial={reduce ? { opacity: 0 } : { opacity: 0, scale: 1.03 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+            >
+              <Photo
+                name={`rooms/${room.image}`}
+                format="webp"
+                alt={`${type.name.replace(/s$/, "")}: ${describe(room).toLowerCase()}`}
+                width={2000}
+                height={1000}
+                className="aspect-[2/1] w-full object-cover"
+              />
+            </motion.div>
+          </AnimatePresence>
+        </div>
+
+        <p className="mt-4 flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+          <span className="font-medium">{describe(room)}</span>
+          <span className="text-muted">
+            <span className="font-medium text-ink">{formatPrice(room.price)}</span> per guest, a night
+          </span>
+        </p>
+
+        {/* Every room of this size; horizontal scroll on phones, wraps on larger screens. */}
+        <div
+          role="group"
+          aria-label={`${type.name}, choose a room to see it`}
+          className="mt-4 flex gap-2 overflow-x-auto pb-1 [scrollbar-width:none] sm:flex-wrap [&::-webkit-scrollbar]:hidden"
+        >
+          {type.rooms.map((r, i) => (
+            <button
+              key={r.n}
+              type="button"
+              onClick={() => setSelected(i)}
+              aria-pressed={i === selected}
+              aria-label={describe(r)}
+              className={`relative shrink-0 overflow-hidden rounded-[12px] transition-[opacity,box-shadow] ${
+                i === selected ? "ring-2 ring-accent ring-offset-2 ring-offset-surface" : "opacity-60 hover:opacity-100"
+              }`}
+            >
+              <Photo
+                name={`rooms/${r.image}`}
+                format="webp"
+                alt=""
+                width={2000}
+                height={1000}
+                className="h-14 w-28 object-cover md:h-16 md:w-32"
+              />
+              {r.view && (
+                <span className="absolute bottom-1 right-1 grid size-6 place-items-center rounded-full bg-[#08101c]/60 text-[#f6f8f7]">
+                  <MountainsIcon size={14} weight="fill" />
+                </span>
+              )}
+            </button>
+          ))}
+        </div>
       </div>
 
-      {/* The featured photo takes the spare height; on the smaller cards the text does, so their links line up. */}
-      <div className={`flex flex-col p-6 md:p-7 ${featured ? "" : "flex-1"}`}>
-        <div className="flex items-baseline justify-between gap-4">
-          <h3 className={`font-display font-semibold tracking-tight ${featured ? "text-3xl" : "text-2xl"}`}>
-            {room.name}
-          </h3>
-          <p className="shrink-0 text-sm text-muted">
-            <span className="text-lg font-medium text-ink">{formatPrice(room.pricePerNight)}</span> a night
-          </p>
-        </div>
-        <p className="mt-2 max-w-[52ch] leading-relaxed text-muted">{room.summary}</p>
-        <div className="mt-auto flex flex-wrap items-center justify-between gap-x-6 gap-y-4 pt-5">
-          <ul className="flex flex-wrap gap-x-5 gap-y-2 text-sm">
-            <li className="flex items-center gap-2">
-              <UsersIcon size={18} className="text-accent" />
-              Sleeps {room.sleeps}
-            </li>
-            <li className="flex items-center gap-2">
+      <div className="flex flex-col">
+        <h3 className="font-display text-3xl font-semibold tracking-tight md:text-4xl">{type.name}</h3>
+        <p className="mt-2 text-muted">
+          {type.rooms.length} rooms{views > 0 && `, ${views} with a view of the range`}.
+        </p>
+
+        <dl className="mt-8 grid grid-cols-2 gap-6 border-t border-line pt-6">
+          <div>
+            <dt className="flex items-center gap-2 text-sm text-muted">
               <BedIcon size={18} className="text-accent" />
-              {room.bed}
-            </li>
+              Beds
+            </dt>
+            <dd className="mt-1 font-medium">{type.beds}</dd>
+          </div>
+          <div>
+            <dt className="flex items-center gap-2 text-sm text-muted">
+              <UsersIcon size={18} className="text-accent" />
+              Minimum
+            </dt>
+            <dd className="mt-1 font-medium">{type.minGuests} guests</dd>
+          </div>
+          <div className="col-span-2">
+            <dt className="text-sm text-muted">Per guest, a night</dt>
+            <dd className="mt-1 font-display text-3xl font-semibold tracking-tight">{priceRange(type)}</dd>
+          </div>
+        </dl>
+
+        <div className="mt-6 border-t border-line pt-6">
+          <p className="text-sm text-muted">Included</p>
+          <ul className="mt-3 flex flex-wrap gap-2">
+            {site.rooms.included.map((item) => (
+              <li key={item} className="inline-flex items-center gap-1.5 rounded-full bg-surface-2 px-3 py-1.5 text-sm">
+                <CheckIcon size={14} weight="bold" className="text-accent" />
+                {item}
+              </li>
+            ))}
           </ul>
-          <a
-            href="#booking"
-            onClick={() => chooseRoom(room.name)}
-            className="group/link inline-flex items-center gap-1.5 text-sm font-medium text-accent"
-          >
-            Check availability
-            <ArrowRightIcon size={16} className="transition-transform group-hover/link:translate-x-0.5" />
-          </a>
         </div>
+
+        <a
+          href="#booking"
+          onClick={() => chooseRoom(type.name)}
+          className="mt-8 inline-flex h-12 w-fit items-center gap-2 rounded-full bg-accent px-7 font-medium text-accent-ink transition-transform hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] md:mt-auto"
+        >
+          Check availability
+          <ArrowRightIcon size={18} weight="bold" />
+        </a>
       </div>
-    </motion.article>
+    </div>
   );
 }
 
 export function Rooms() {
-  const [featured, ...others] = site.rooms.items;
+  const [active, setActive] = useState<RoomType["id"]>("triple");
+  const type = types.find((t) => t.id === active)!;
 
   return (
     <section id="rooms" className="mx-auto max-w-[1400px] px-4 py-20 md:px-8 md:py-28">
       <SectionIntro headline={site.rooms.headline} body={site.rooms.body} />
 
-      {/* One large room beside two stacked rooms. Collapses to a single column below md. */}
-      <div className="mt-12 grid grid-cols-1 gap-4 md:mt-14 md:grid-cols-[1.35fr_1fr] md:grid-rows-2">
-        <Reveal className="md:row-span-2">
-          <RoomCard room={featured} featured />
-        </Reveal>
-        {others.map((room, i) => (
-          <Reveal key={room.id} delay={0.08 * (i + 1)}>
-            <RoomCard room={room} featured={false} />
-          </Reveal>
-        ))}
-      </div>
+      <Reveal className="mt-10 md:mt-12">
+        <div role="tablist" aria-label="Room sizes" className="inline-flex rounded-full border border-line p-1">
+          {types.map((t) => (
+            <button
+              key={t.id}
+              type="button"
+              role="tab"
+              id={`tab-${t.id}`}
+              aria-selected={t.id === active}
+              aria-controls={`panel-${t.id}`}
+              onClick={() => setActive(t.id)}
+              className={`relative rounded-full px-4 py-2.5 text-sm font-medium transition-colors md:px-6 ${
+                t.id === active ? "text-surface" : "text-muted hover:text-ink"
+              }`}
+            >
+              {t.id === active && (
+                <motion.span layoutId="room-tab" className="absolute inset-0 rounded-full bg-ink" transition={{ type: "spring", stiffness: 380, damping: 32 }} />
+              )}
+              <span className="relative">
+                {t.name.replace(" rooms", "")}
+                <span className="ml-1.5 opacity-60">{t.rooms.length}</span>
+              </span>
+            </button>
+          ))}
+        </div>
+      </Reveal>
+
+      <Reveal delay={0.08} className="mt-8 md:mt-10">
+        <div role="tabpanel" id={`panel-${type.id}`} aria-labelledby={`tab-${type.id}`}>
+          {/* Keyed so each size opens on its first room. */}
+          <TypePanel key={type.id} type={type} />
+        </div>
+      </Reveal>
     </section>
   );
 }

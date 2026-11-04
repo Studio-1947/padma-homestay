@@ -1,0 +1,35 @@
+{
+  "source": "https://padmahomestay.com/rooms.php",
+  "scraped": "2026-11-04",
+  "note": "Rooms in page order. Each room has exactly one photo on the page. 4.jpg is used for two different rooms; 3.jpg is in the image folder but not shown on the page. Photos are 1000 x 500.",
+  "includesEveryRoom": "Hot water",
+  "packageIncludes": "Bed tea, breakfast, lunch, evening snacks and dinner",
+  "rooms": [
+    { "n": 1, "name": "Triple Bed View Room", "beds": 3, "floor": null, "view": true, "roomRate": 1500, "minGuests": 3, "packagePerHead": 1500, "image": "1.jpg" },
+    { "n": 2, "name": "Triple Bed Room", "beds": 3, "floor": null, "view": false, "roomRate": 1200, "minGuests": 3, "packagePerHead": 1200, "image": "2.jpg" },
+    { "n": 3, "name": "Triple Bed Room", "beds": 3, "floor": null, "view": false, "roomRate": 1200, "minGuests": 3, "packagePerHead": 1200, "image": "4.jpg" },
+    { "n": 4, "name": "Double Bed First Floor View Room", "beds": 2, "floor": "first", "view": true, "roomRate": 1500, "minGuests": 2, "packagePerHead": 1500, "image": "5.jpg" },
+    { "n": 5, "name": "Triple Bed Room", "beds": 3, "floor": null, "view": false, "roomRate": 1200, "minGuests": 3, "packagePerHead": 1200, "image": "6.jpg" },
+    { "n": 6, "name": "Triple Bed View Room", "beds": 3, "floor": null, "view": true, "roomRate": 1200, "minGuests": 3, "packagePerHead": 1200, "image": "7.jpg" },
+    { "n": 7, "name": "Double Bed First Floor Room", "beds": 2, "floor": "first", "view": false, "roomRate": 1200, "minGuests": 2, "packagePerHead": 1200, "image": "8.jpg" },
+    { "n": 8, "name": "Four Bed Ground Floor Room", "beds": 4, "floor": "ground", "view": false, "roomRate": 1200, "minGuests": 4, "packagePerHead": 1200, "image": "4.jpg" },
+    { "n": 9, "name": "Four Bed First Floor Room", "beds": 4, "floor": "first", "view": false, "roomRate": 1200, "minGuests": 4, "packagePerHead": 1200, "image": "9.jpg" },
+    { "n": 10, "name": "Double Bed First Floor Room", "beds": 2, "floor": "first", "view": false, "roomRate": 1200, "minGuests": 2, "packagePerHead": 1200, "image": "10.jpg" },
+    { "n": 11, "name": "Triple Bed Ground Floor Room", "beds": 3, "floor": "ground", "view": false, "roomRate": 1200, "minGuests": 3, "packagePerHead": 1200, "image": "11.jpg" },
+    { "n": 12, "name": "Triple Bed Room", "beds": 3, "floor": null, "view": false, "roomRate": 1200, "minGuests": 3, "packagePerHead": 1200, "image": "12.jpg" },
+    { "n": 13, "name": "Four Bed Ground Floor Room", "beds": 4, "floor": "ground", "view": false, "roomRate": 1200, "minGuests": 4, "packagePerHead": 1200, "image": "13.jpg" }
+  ],
+  "menu": [
+    { "item": "Breakfast", "contents": "Puri, sabji, egg or omelette, tea", "price": 100 },
+    { "item": "Veg thali", "contents": "Rice or roti, shag, dal, bhaji, sabji, salad, papad", "price": 120 },
+    { "item": "Egg thali", "contents": "Rice or roti, shag, dal, bhaji, egg, salad, papad", "price": 140 },
+    { "item": "Chicken thali", "contents": "Rice or roti, shag, dal, bhaji, chicken, salad, papad", "price": 180 }
+  ],
+  "facilities": ["Hot water", "Campfire", "Trekking", "Local sightseeing", "Pickup and drop"],
+  "contact": {
+    "address": "Dhotrey, P.O. Bansbotay, Lodhoma Pul Bazar, Darjeeling 734201",
+    "phones": ["7047666726", "6295045952", "8768873121"],
+    "website": "www.padmahomestay.com",
+    "emailOnPage": "booking@.com (broken; the link points to booking@shiwalikhomestaysittong.com, another business)"
+  }
+}

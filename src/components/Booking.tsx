@@ -16,7 +16,8 @@ type Fields = {
 type Errors = Partial<Record<keyof Fields, string>>;
 
 const EMPTY: Fields = { name: "", checkIn: "", checkOut: "", guests: "2", room: "Any room", message: "" };
-const MAX_GUESTS = 8;
+// Thirteen rooms of two to four guests each; larger groups can say so in the note.
+const MAX_GUESTS = 40;
 
 const today = () => {
   const now = new Date();
@@ -118,10 +119,15 @@ export function Booking() {
 
           <ul className="mt-10 space-y-4">
             <li>
-              <a href={site.phoneHref} className="inline-flex items-center gap-3 hover:text-accent">
+              <p className="inline-flex flex-wrap items-center gap-x-3 gap-y-1">
                 <PhoneIcon size={20} className="text-accent" />
-                {site.phoneDisplay}
-              </a>
+                {[{ display: site.phoneDisplay, href: site.phoneHref }, ...site.otherPhones].map((phone, i) => (
+                  <a key={phone.href} href={phone.href} className="hover:text-accent">
+                    {phone.display}
+                    {i < site.otherPhones.length ? <span className="text-muted">,</span> : null}
+                  </a>
+                ))}
+              </p>
             </li>
             <li>
               <a href={`mailto:${site.email}`} className="inline-flex items-center gap-3 hover:text-accent">
@@ -189,8 +195,8 @@ export function Booking() {
               {(props) => (
                 <select {...props} value={fields.room} onChange={set("room")} className={inputClass}>
                   <option>Any room</option>
-                  {site.rooms.items.map((room) => (
-                    <option key={room.id}>{room.name}</option>
+                  {site.rooms.types.map((type) => (
+                    <option key={type.id}>{type.name}</option>
                   ))}
                 </select>
               )}

@@ -44,22 +44,28 @@ export function Gallery() {
     <section id="gallery" className="mx-auto max-w-[1400px] px-4 py-20 md:px-8 md:py-28">
       <SectionIntro headline={site.gallery.headline} body={site.gallery.body} />
 
-      {/* Masonry columns: one on phones, two from sm, three from lg. */}
-      <div className="mt-12 columns-1 gap-4 sm:columns-2 md:mt-14 lg:columns-3">
+      {/* Portraits are one column by two rows, landscapes two by two, so rows always end level.
+          Two columns until lg, four from lg; row height tracks the column width. */}
+      <div className="mt-12 grid grid-flow-dense auto-rows-[34vw] grid-cols-2 gap-3 md:mt-14 md:gap-4 lg:auto-rows-[min(17vw,240px)] lg:grid-cols-4">
         {items.map((item, i) => (
-          <Reveal key={item.image} delay={(i % 3) * 0.06} className="mb-4 break-inside-avoid">
+          <Reveal
+            key={item.image}
+            delay={(i % 4) * 0.06}
+            className={item.height > item.width ? "row-span-2" : "col-span-2 row-span-2"}
+          >
             <button
               type="button"
               onClick={() => open(i)}
               aria-label={`Open photo: ${item.alt}`}
-              className="group block w-full overflow-hidden rounded-[20px] bg-surface-2"
+              className="group block size-full overflow-hidden rounded-[20px] bg-surface-2"
             >
               <Photo
                 name={item.image}
+                format="webp"
                 alt={item.alt}
                 width={item.width}
                 height={item.height}
-                className="h-auto w-full transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.03]"
+                className="size-full object-cover transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] motion-safe:group-hover:scale-[1.03]"
               />
             </button>
           </Reveal>
@@ -82,6 +88,7 @@ export function Gallery() {
               <Photo
                 key={current.image}
                 name={current.image}
+                format="webp"
                 alt={current.alt}
                 width={current.width}
                 height={current.height}

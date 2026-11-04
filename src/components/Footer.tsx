@@ -11,7 +11,7 @@ export function Footer() {
         <div>
           <p className="font-display text-3xl font-semibold tracking-tight">{site.name}</p>
           <p className="mt-3 max-w-[32ch] leading-relaxed text-muted">
-            A family home with three guest rooms, on the trail into Singalila National Park.
+            A family home with thirteen guest rooms, on the trail into Singalila National Park.
           </p>
         </div>
 
@@ -32,11 +32,13 @@ export function Footer() {
         <div>
           <p className={heading}>Contact</p>
           <ul className="mt-4 space-y-2.5">
-            <li>
-              <a href={site.phoneHref} className={link}>
-                {site.phoneDisplay}
-              </a>
-            </li>
+            {[{ display: site.phoneDisplay, href: site.phoneHref }, ...site.otherPhones].map((phone) => (
+              <li key={phone.href}>
+                <a href={phone.href} className={link}>
+                  {phone.display}
+                </a>
+              </li>
+            ))}
             <li>
               <a href={`mailto:${site.email}`} className={link}>
                 {site.email}
@@ -65,9 +67,22 @@ export function Footer() {
         </div>
       </div>
 
-      <p className="mt-14 text-sm text-muted">
-        &copy; {new Date().getFullYear()} {site.name}
-      </p>
+      <div className="mt-14 flex flex-wrap items-center justify-between gap-x-6 gap-y-2 text-sm text-muted">
+        <p>
+          &copy; {new Date().getFullYear()} {site.name}
+        </p>
+        <p>
+          Designed by{" "}
+          <a
+            href="https://www.1947.io"
+            target="_blank"
+            rel="noopener"
+            className="font-medium text-ink underline decoration-line underline-offset-4 transition-colors hover:text-accent hover:decoration-accent"
+          >
+            Studio 1947
+          </a>
+        </p>
+      </div>
     </footer>
   );
 }
