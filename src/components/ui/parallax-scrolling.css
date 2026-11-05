@@ -118,6 +118,9 @@
   object-position: center 72%;
   opacity: 1;
   mix-blend-mode: screen;
+  /* Fade the top edge in: on phones the hard edge of the fog image showed as a white hairline. */
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 30%);
+  mask-image: linear-gradient(to bottom, transparent, #000 30%);
   animation: fog-drift 10s ease-in-out infinite alternate;
   will-change: transform;
 }
