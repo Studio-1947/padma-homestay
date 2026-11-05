@@ -274,8 +274,17 @@ export const site = {
     headline: "Around Dhotrey.",
     body: "Dhotrey sits on the trail into Singalila National Park, so the walking starts at the door.",
     // SAMPLE: confirm distances and times.
+    // In trail order, from the town below up to Sandakphu; Dhotrey sits between the first two.
     // Photos from Wikimedia Commons (free licences, credit required), cropped to the card shape.
     items: [
+      {
+        id: "maneybhanjang",
+        name: "Maneybhanjang",
+        distance: "45 minute drive",
+        body: "The old trekking town below us, with its Land Rovers, monastery and market.",
+        image: "nearby/maneybhanjang",
+        credit: { author: "Matt Stabile", license: "CC BY 2.0", source: "https://commons.wikimedia.org/wiki/File:Maneybhanjang_(8716434967).jpg" },
+      },
       {
         id: "tonglu",
         name: "Tonglu",
@@ -283,6 +292,14 @@ export const site = {
         body: "A forest climb to a ridge-top village with a wide view of the Kanchenjunga range.",
         image: "nearby/tonglu",
         credit: { author: "Abhishektiwary1575", license: "CC BY-SA 4.0", source: "https://commons.wikimedia.org/wiki/File:Tonglu_trek.jpg" },
+      },
+      {
+        id: "tumling",
+        name: "Tumling",
+        distance: "On from Tonglu",
+        body: "A few homes on the Nepal border, with tea stops and very big skies.",
+        image: "nearby/tumling",
+        credit: { author: "Satadru306", license: "CC BY-SA 4.0", source: "https://commons.wikimedia.org/wiki/File:Sunkissed_Trail_of_Tumling.jpg" },
       },
       {
         id: "singalila",
@@ -299,22 +316,6 @@ export const site = {
         body: "The highest point in West Bengal, with Everest and Kanchenjunga in the same view.",
         image: "nearby/sandakphu",
         credit: { author: "Alexkom000", license: "CC BY 4.0", source: "https://commons.wikimedia.org/wiki/File:2024-03-10_Kangchenjunga_and_Kumbhakarna_mountains_seen_from_Sandakphu_4.jpg" },
-      },
-      {
-        id: "tumling",
-        name: "Tumling",
-        distance: "On from Tonglu",
-        body: "A few homes on the Nepal border, with tea stops and very big skies.",
-        image: "nearby/tumling",
-        credit: { author: "Satadru306", license: "CC BY-SA 4.0", source: "https://commons.wikimedia.org/wiki/File:Sunkissed_Trail_of_Tumling.jpg" },
-      },
-      {
-        id: "maneybhanjang",
-        name: "Maneybhanjang",
-        distance: "45 minute drive",
-        body: "The old trekking town below us, with its Land Rovers, monastery and market.",
-        image: "nearby/maneybhanjang",
-        credit: { author: "Matt Stabile", license: "CC BY 2.0", source: "https://commons.wikimedia.org/wiki/File:Maneybhanjang_(8716434967).jpg" },
       },
     ] satisfies Place[],
   },
