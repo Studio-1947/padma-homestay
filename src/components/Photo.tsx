@@ -16,11 +16,6 @@ type PhotoProps = {
  * right before the real photos arrive. A slot not listed here gets a random one.
  */
 const PLACEHOLDER_ID: Record<string, number> = {
-  "nearby-tonglu": 1018,
-  "nearby-singalila": 1021,
-  "nearby-sandakphu": 1036,
-  "nearby-tumling": 11,
-  "nearby-maneybhanjang": 1043,
 };
 
 function placeholder(name: string, width: number, height: number) {

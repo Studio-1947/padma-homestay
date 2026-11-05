@@ -10,7 +10,7 @@ file exists, the site shows a stand-in photo in that slot.
 | `rooms/1.webp` to `rooms/13.webp` | Rooms section. The old site's room photos (`assets-src/old-site-rooms`), upscaled 2x. Which photo belongs to which room is set in `src/content/site.ts` | 2000 x 1000 |
 | `food/*.webp`   | Kitchen section: spread, kitchen, dishes (real photos, upscaled 2x) and menu plates breakfast, veg-thali, egg-thali, chicken-thali. Originals in assets-src/food | as supplied |
 | `property/*.webp` | Gallery (A look around): the house, rooms, dining room and views. Upscaled 2x; originals in assets-src/property | as supplied |
-| `nearby-tonglu.jpg`, `nearby-singalila.jpg`, `nearby-sandakphu.jpg`, `nearby-tumling.jpg`, `nearby-maneybhanjang.jpg` | Around Dhotrey cards | 900 x 1100 |
+| `nearby/*.webp` | Around Dhotrey cards. Real photos from Wikimedia Commons under free licences; the credit shown on each card is required. Credits live in `src/content/site.ts` | 900 x 1100 |
 
 Gallery photos can be any shape: change `width` and `height` for that photo in
 `src/content/site.ts` to match the real file, and the wall rearranges itself.

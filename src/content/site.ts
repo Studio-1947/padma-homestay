@@ -48,7 +48,10 @@ export type GalleryItem = {
   height: number;
 };
 
-export type Place = { id: string; name: string; distance: string; body: string; image: string };
+/** Who took a photo and under which licence; shown under the photo as the licence requires. */
+export type PhotoCredit = { author: string; license: string; source: string };
+
+export type Place = { id: string; name: string; distance: string; body: string; image: string; credit: PhotoCredit };
 
 export type Route = { id: "air" | "rail" | "road"; title: string; from: string; time: string; body: string };
 
@@ -270,42 +273,48 @@ export const site = {
   nearby: {
     headline: "Around Dhotrey.",
     body: "Dhotrey sits on the trail into Singalila National Park, so the walking starts at the door.",
-    // SAMPLE: confirm distances and times
+    // SAMPLE: confirm distances and times.
+    // Photos from Wikimedia Commons (free licences, credit required), cropped to the card shape.
     items: [
       {
         id: "tonglu",
         name: "Tonglu",
         distance: "3 to 4 hour walk",
         body: "A forest climb to a ridge-top village with a wide view of the Kanchenjunga range.",
-        image: "nearby-tonglu",
+        image: "nearby/tonglu",
+        credit: { author: "Abhishektiwary1575", license: "CC BY-SA 4.0", source: "https://commons.wikimedia.org/wiki/File:Tonglu_trek.jpg" },
       },
       {
         id: "singalila",
         name: "Singalila forest",
         distance: "From the park gate",
         body: "Oak, magnolia and rhododendron forest, home to red pandas and Himalayan birds.",
-        image: "nearby-singalila",
+        image: "nearby/singalila",
+        credit: { author: "Alexkom000", license: "CC BY 4.0", source: "https://commons.wikimedia.org/wiki/File:2024-03-10_Singalila_National_Park_13.jpg" },
       },
       {
         id: "sandakphu",
         name: "Sandakphu",
         distance: "3 day trek",
         body: "The highest point in West Bengal, with Everest and Kanchenjunga in the same view.",
-        image: "nearby-sandakphu",
+        image: "nearby/sandakphu",
+        credit: { author: "Alexkom000", license: "CC BY 4.0", source: "https://commons.wikimedia.org/wiki/File:2024-03-10_Kangchenjunga_and_Kumbhakarna_mountains_seen_from_Sandakphu_4.jpg" },
       },
       {
         id: "tumling",
         name: "Tumling",
         distance: "On from Tonglu",
         body: "A few homes on the Nepal border, with tea stops and very big skies.",
-        image: "nearby-tumling",
+        image: "nearby/tumling",
+        credit: { author: "Satadru306", license: "CC BY-SA 4.0", source: "https://commons.wikimedia.org/wiki/File:Sunkissed_Trail_of_Tumling.jpg" },
       },
       {
         id: "maneybhanjang",
         name: "Maneybhanjang",
         distance: "45 minute drive",
         body: "The old trekking town below us, with its Land Rovers, monastery and market.",
-        image: "nearby-maneybhanjang",
+        image: "nearby/maneybhanjang",
+        credit: { author: "Matt Stabile", license: "CC BY 2.0", source: "https://commons.wikimedia.org/wiki/File:Maneybhanjang_(8716434967).jpg" },
       },
     ] satisfies Place[],
   },

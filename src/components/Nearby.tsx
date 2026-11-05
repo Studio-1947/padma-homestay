@@ -46,6 +46,7 @@ export function Nearby() {
                 <div className="overflow-hidden rounded-[20px] bg-surface-2">
                   <Photo
                     name={place.image}
+                    format="webp"
                     alt={place.name}
                     width={900}
                     height={1100}
@@ -57,6 +58,16 @@ export function Nearby() {
                   <p className="shrink-0 text-sm text-muted">{place.distance}</p>
                 </div>
                 <p className="mt-1.5 leading-relaxed text-muted">{place.body}</p>
+                <p className="mt-3 text-xs text-muted/80">
+                  <a
+                    href={place.credit.source}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="underline decoration-line underline-offset-2 transition-colors hover:text-ink"
+                  >
+                    Photo: {place.credit.author}, {place.credit.license}
+                  </a>
+                </p>
               </article>
             </li>
           ))}
