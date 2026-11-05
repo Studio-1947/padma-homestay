@@ -54,12 +54,12 @@ export function Nav() {
           >
             <a
               href="#top"
-              className="font-display text-lg font-semibold tracking-tight"
+              className="inline-flex min-h-11 items-center font-display text-lg font-semibold tracking-tight"
             >
               {site.name}
             </a>
 
-            <ul className="hidden items-center gap-7 text-sm md:flex">
+            <ul className="hidden items-center gap-7 text-sm lg:flex">
               {navLinks.map((link) => (
                 <li key={link.href}>
                   <a
@@ -99,7 +99,7 @@ export function Nav() {
                 aria-expanded={open}
                 aria-controls="mobile-menu"
                 aria-label={open ? "Close menu" : "Open menu"}
-                className="grid size-10 place-items-center rounded-full text-ink transition-colors hover:bg-ink/10 md:hidden"
+                className="grid size-10 place-items-center rounded-full text-ink transition-colors hover:bg-ink/10 lg:hidden"
               >
                 {open ? <X size={20} /> : <List size={20} />}
               </button>
@@ -114,7 +114,7 @@ export function Nav() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={reduce ? { opacity: 0 } : { opacity: 0, y: -8 }}
                 transition={{ duration: 0.2 }}
-                className="mx-auto mt-2 max-w-[1400px] rounded-[20px] border border-line bg-surface p-2 md:hidden"
+                className="mx-auto mt-2 max-w-[1400px] rounded-[20px] border border-line bg-surface p-2 lg:hidden"
               >
                 {[
                   ...navLinks,

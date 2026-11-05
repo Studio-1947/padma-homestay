@@ -54,7 +54,7 @@ function buildMessage(fields: Fields): string {
 }
 
 const inputClass =
-  "h-12 w-full rounded-[12px] border border-ink/25 bg-surface px-4 text-ink outline-none transition-colors placeholder:text-muted focus:border-accent aria-[invalid=true]:border-accent";
+  "h-12 w-full min-w-0 rounded-[12px] border border-ink/25 bg-surface px-3 text-base text-ink sm:px-4 outline-none transition-colors placeholder:text-muted focus:border-accent aria-[invalid=true]:border-accent";
 
 function Field({
   label,
@@ -110,27 +110,29 @@ export function Booking() {
 
   return (
     <section id="booking" className="mx-auto max-w-[1400px] px-4 py-20 md:px-8 md:py-28">
-      <div className="grid grid-cols-1 gap-12 rounded-[20px] bg-surface-2 p-6 md:grid-cols-[1fr_1.15fr] md:gap-16 md:p-12">
+      <div className="grid grid-cols-1 gap-10 rounded-[24px] bg-surface-2 p-5 sm:p-8 lg:grid-cols-[1fr_1.15fr] md:gap-12 md:p-12 lg:gap-16">
         <Reveal>
           <h2 className="font-display text-4xl font-semibold leading-[1.05] tracking-tighter md:text-5xl">
             {site.booking.headline}
           </h2>
           <p className="mt-4 max-w-[40ch] text-lg leading-relaxed text-muted">{site.booking.body}</p>
 
-          <ul className="mt-10 space-y-4">
+          <ul className="mt-8 space-y-1 md:mt-10">
             <li>
-              <p className="inline-flex flex-wrap items-center gap-x-3 gap-y-1">
-                <PhoneIcon size={20} className="text-accent" />
-                {[{ display: site.phoneDisplay, href: site.phoneHref }, ...site.otherPhones].map((phone, i) => (
-                  <a key={phone.href} href={phone.href} className="hover:text-accent">
-                    {phone.display}
-                    {i < site.otherPhones.length ? <span className="text-muted">,</span> : null}
-                  </a>
-                ))}
-              </p>
+              {/* One tappable row per number. */}
+              <div className="flex gap-3">
+                <PhoneIcon size={20} className="mt-3 shrink-0 text-accent" />
+                <div className="flex flex-col">
+                  {[{ display: site.phoneDisplay, href: site.phoneHref }, ...site.otherPhones].map((phone) => (
+                    <a key={phone.href} href={phone.href} className="inline-flex min-h-11 items-center hover:text-accent">
+                      {phone.display}
+                    </a>
+                  ))}
+                </div>
+              </div>
             </li>
             <li>
-              <a href={`mailto:${site.email}`} className="inline-flex items-center gap-3 hover:text-accent">
+              <a href={`mailto:${site.email}`} className="inline-flex min-h-11 items-center gap-3 break-all hover:text-accent">
                 <EnvelopeSimpleIcon size={20} className="text-accent" />
                 {site.email}
               </a>
@@ -140,9 +142,9 @@ export function Booking() {
                 href={site.mapsUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-3 hover:text-accent"
+                className="inline-flex min-h-11 items-start gap-3 py-2.5 hover:text-accent"
               >
-                <MapPinIcon size={20} className="shrink-0 text-accent" />
+                <MapPinIcon size={20} className="mt-0.5 shrink-0 text-accent" />
                 {site.address}
               </a>
             </li>
@@ -150,8 +152,8 @@ export function Booking() {
         </Reveal>
 
         <Reveal delay={0.1}>
-          <form onSubmit={onSubmit} noValidate className="grid grid-cols-1 gap-5 sm:grid-cols-2">
-            <Field label="Your name" error={errors.name} className="sm:col-span-2">
+          <form onSubmit={onSubmit} noValidate className="grid grid-cols-1 gap-x-3 gap-y-5 min-[380px]:grid-cols-2 sm:gap-x-5">
+            <Field label="Your name" error={errors.name} className="min-[380px]:col-span-2">
               {(props) => (
                 <input {...props} type="text" autoComplete="name" value={fields.name} onChange={set("name")} className={inputClass} />
               )}
@@ -202,7 +204,7 @@ export function Booking() {
               )}
             </Field>
 
-            <Field label="Anything we should know? (optional)" className="sm:col-span-2">
+            <Field label="Anything we should know? (optional)" className="min-[380px]:col-span-2">
               {(props) => (
                 <textarea
                   {...props}
@@ -214,10 +216,10 @@ export function Booking() {
               )}
             </Field>
 
-            <div className="sm:col-span-2">
+            <div className="min-[380px]:col-span-2">
               <button
                 type="submit"
-                className="inline-flex h-12 items-center gap-2 rounded-full bg-accent px-7 font-medium text-accent-ink transition-transform hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98]"
+                className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-full bg-accent px-7 font-medium sm:w-auto text-accent-ink transition-transform hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98]"
               >
                 <WhatsappLogoIcon size={20} weight="fill" />
                 Send on WhatsApp

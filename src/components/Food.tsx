@@ -103,17 +103,18 @@ export function Food() {
       </ul>
 
       <Reveal delay={0.06} className="mt-12 md:mt-16">
-        <div className="rounded-[24px] border border-line bg-surface-2 p-6 md:p-10">
+        <div className="rounded-[24px] border border-line bg-surface-2 p-5 sm:p-6 md:p-10">
           <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2">
             <h3 className="font-display text-2xl font-semibold tracking-tight md:text-3xl">
               Or order as you go
             </h3>
             <p className="text-sm text-muted">Per plate, cooked to order</p>
           </div>
-          <ul className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4 lg:gap-5">
+          {/* Phones: compact rows (thumbnail, name, price). From sm: photo cards. */}
+          <ul className="mt-6 grid divide-y divide-line sm:mt-8 sm:grid-cols-2 sm:gap-6 sm:divide-y-0 lg:grid-cols-4 lg:gap-5">
             {food.menu.map((item) => (
-              <li key={item.name} className="group flex flex-col">
-                <div className="relative aspect-[4/3] overflow-hidden rounded-[16px] bg-surface">
+              <li key={item.name} className="group flex items-center gap-4 py-4 first:pt-0 last:pb-0 sm:flex-col sm:items-stretch sm:gap-0 sm:py-0">
+                <div className="relative size-24 shrink-0 overflow-hidden rounded-[14px] bg-surface sm:aspect-[4/3] sm:size-auto sm:rounded-[16px]">
                   <Photo
                     name={item.image}
                     format="webp"
@@ -122,16 +123,23 @@ export function Food() {
                     height={800}
                     className={`size-full object-cover ${zoom}`}
                   />
-                  <p className="absolute right-3 top-3 rounded-full bg-surface/90 px-3 py-1 font-display text-lg font-semibold tabular-nums tracking-tight text-accent backdrop-blur-md">
+                  <p className="absolute right-3 top-3 hidden rounded-full sm:block bg-surface/90 px-3 py-1 font-display text-lg font-semibold tabular-nums tracking-tight text-accent backdrop-blur-md">
                     {formatPrice(item.price)}
                   </p>
                 </div>
-                <p className="mt-4 font-display text-xl font-semibold tracking-tight">
-                  {item.name}
-                </p>
-                <p className="mt-1 text-sm leading-relaxed text-muted">
-                  {item.contents}
-                </p>
+                <div className="min-w-0 flex-1">
+                  <div className="flex items-baseline justify-between gap-3 sm:mt-4">
+                    <p className="font-display text-lg font-semibold tracking-tight sm:text-xl">
+                      {item.name}
+                    </p>
+                    <p className="font-display text-lg font-semibold tabular-nums tracking-tight text-accent sm:hidden">
+                      {formatPrice(item.price)}
+                    </p>
+                  </div>
+                  <p className="mt-1 text-sm leading-relaxed text-muted">
+                    {item.contents}
+                  </p>
+                </div>
               </li>
             ))}
           </ul>

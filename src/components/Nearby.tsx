@@ -227,7 +227,7 @@ export function Nearby() {
                 href={place.credit.source}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="underline decoration-line underline-offset-2 transition-colors hover:text-ink"
+                className="-my-3 inline-flex min-h-11 items-center underline decoration-line underline-offset-2 transition-colors hover:text-ink"
               >
                 Photo: {place.credit.author}, {place.credit.license}
               </a>

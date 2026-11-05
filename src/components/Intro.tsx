@@ -7,7 +7,7 @@ export function Intro() {
     <section id="welcome" className="mx-auto max-w-[1400px] px-4 pb-20 pt-8 md:px-8 md:pb-28 md:pt-12">
       <h2 className="sr-only">About {site.name}</h2>
       <Reveal>
-        <p className="max-w-[30ch] font-display text-3xl font-medium leading-[1.2] tracking-tight md:text-[2.75rem]">
+        <p className="max-w-[30ch] font-display text-[1.625rem] font-medium leading-[1.25] tracking-tight sm:text-3xl md:text-[2.75rem] md:leading-[1.2]">
           {site.intro.statement}
         </p>
       </Reveal>
@@ -17,7 +17,7 @@ export function Intro() {
         {site.intro.facts.map((fact, i) => (
           <Reveal key={fact.label} delay={i * 0.06}>
             <dt className="text-sm text-muted">{fact.label}</dt>
-            <dd className="mt-1.5 font-display text-3xl font-semibold tracking-tight md:text-4xl">{fact.value}</dd>
+            <dd className="mt-1.5 font-display text-2xl font-semibold tracking-tight sm:text-3xl md:text-4xl">{fact.value}</dd>
           </Reveal>
         ))}
       </dl>

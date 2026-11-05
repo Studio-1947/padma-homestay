@@ -29,7 +29,7 @@ function TypePanel({ type }: { type: RoomType }) {
   const views = type.rooms.filter((r) => r.view).length;
 
   return (
-    <div className="grid gap-8 md:grid-cols-[1.55fr_1fr] md:gap-12">
+    <div className="grid gap-8 lg:grid-cols-[1.55fr_1fr] lg:gap-12">
       <div>
         <div className="relative overflow-hidden rounded-[20px] bg-surface-2">
           <AnimatePresence initial={false} mode="popLayout">
@@ -46,7 +46,7 @@ function TypePanel({ type }: { type: RoomType }) {
                 alt={`${type.name.replace(/s$/, "")}: ${describe(room).toLowerCase()}`}
                 width={2000}
                 height={1000}
-                className="aspect-[2/1] w-full object-cover"
+                className="aspect-[4/3] w-full object-cover sm:aspect-[2/1]"
               />
             </motion.div>
           </AnimatePresence>
@@ -136,7 +136,7 @@ function TypePanel({ type }: { type: RoomType }) {
         <a
           href="#booking"
           onClick={() => chooseRoom(type.name)}
-          className="mt-8 inline-flex h-12 w-fit items-center gap-2 rounded-full bg-accent px-7 font-medium text-accent-ink transition-transform hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] md:mt-auto"
+          className="mt-8 inline-flex h-12 w-fit items-center gap-2 rounded-full bg-accent px-7 font-medium text-accent-ink transition-transform hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] lg:mt-auto"
         >
           Check availability
           <ArrowRightIcon size={18} weight="bold" />
@@ -155,7 +155,7 @@ export function Rooms() {
       <SectionIntro headline={site.rooms.headline} body={site.rooms.body} />
 
       <Reveal className="mt-10 md:mt-12">
-        <div role="tablist" aria-label="Room sizes" className="inline-flex rounded-full border border-line p-1">
+        <div role="tablist" aria-label="Room sizes" className="grid grid-cols-3 rounded-full border border-line p-1 sm:inline-flex">
           {types.map((t) => (
             <button
               key={t.id}
@@ -165,7 +165,7 @@ export function Rooms() {
               aria-selected={t.id === active}
               aria-controls={`panel-${t.id}`}
               onClick={() => setActive(t.id)}
-              className={`relative rounded-full px-4 py-2.5 text-sm font-medium transition-colors md:px-6 ${
+              className={`relative min-h-11 rounded-full px-3 py-2.5 text-sm font-medium transition-colors sm:px-4 md:px-6 ${
                 t.id === active ? "text-surface" : "text-muted hover:text-ink"
               }`}
             >

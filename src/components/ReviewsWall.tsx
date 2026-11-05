@@ -83,7 +83,7 @@ function ReviewCard({ review }: { review: ReviewData }) {
   const long = review.text.length > LONG;
 
   return (
-    <article className="mb-4 break-inside-avoid rounded-[20px] bg-surface p-6 md:p-7">
+    <article className="mb-3 break-inside-avoid rounded-[20px] bg-surface p-5 sm:mb-4 sm:p-6 md:p-7">
       <header className="flex items-center gap-3">
         <Avatar review={review} />
         <div className="min-w-0">
@@ -106,7 +106,7 @@ function ReviewCard({ review }: { review: ReviewData }) {
           type="button"
           onClick={() => setOpen((o) => !o)}
           aria-expanded={open}
-          className="mt-3 text-sm font-medium text-accent hover:underline"
+          className="-my-2 mt-1 min-h-11 py-2 text-sm font-medium text-accent hover:underline"
         >
           {open ? "Show less" : "Read more"}
         </button>
@@ -126,12 +126,12 @@ export default function ReviewsWall() {
   const max = Math.max(...data.breakdown.map((b) => b.count));
 
   return (
-    <div className="mt-12 grid gap-10 md:mt-14 lg:grid-cols-12 lg:gap-12">
+    <div className="mt-10 grid grid-cols-[minmax(0,1fr)] gap-8 md:mt-14 lg:grid-cols-12 lg:gap-12">
       {/* The overall score; sticks beside the cards on large screens. */}
       <aside className="lg:col-span-4">
-        <div className="rounded-[24px] bg-surface p-6 md:p-8 lg:sticky lg:top-28">
+        <div className="rounded-[24px] bg-surface p-5 sm:p-6 md:p-8 lg:sticky lg:top-28">
           <div className="flex items-end gap-4">
-            <p className="font-display text-7xl font-semibold leading-none tracking-tighter tabular-nums">{data.average}</p>
+            <p className="font-display text-6xl font-semibold leading-none tracking-tighter tabular-nums sm:text-7xl">{data.average}</p>
             <div className="pb-1">
               <Stars value={data.average} size={20} />
               <p className="mt-1 text-sm text-muted">{data.count} Google reviews</p>
@@ -179,7 +179,12 @@ export default function ReviewsWall() {
       </aside>
 
       <div className="lg:col-span-8">
-        <div role="tablist" aria-label="Filter reviews by topic" className="flex flex-wrap gap-2">
+        {/* One swipeable row on phones, wrapping from sm. */}
+        <div
+          role="tablist"
+          aria-label="Filter reviews by topic"
+          className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-1 [scrollbar-width:none] sm:mx-0 sm:flex-wrap sm:overflow-visible sm:px-0 [&::-webkit-scrollbar]:hidden"
+        >
           {TOPICS.map((t) => (
             <button
               key={t.id}
@@ -190,7 +195,7 @@ export default function ReviewsWall() {
                 setTopic(t.id);
                 setShown(PAGE);
               }}
-              className={`rounded-full px-4 py-2 text-sm font-medium transition-colors ${
+              className={`min-h-11 shrink-0 rounded-full px-4 py-2 text-sm font-medium transition-colors ${
                 t.id === topic ? "bg-ink text-surface" : "bg-surface text-muted hover:text-ink"
               }`}
             >

@@ -23,7 +23,7 @@ export function Hero() {
           <div className="mx-auto flex h-14 max-w-[1400px] items-center pl-5">
             <a
               href="#top"
-              className="font-display text-lg font-semibold tracking-tight text-[#f6f8f7] [text-shadow:0_1px_14px_rgb(8_16_28/0.45)]"
+              className="inline-flex min-h-11 items-center font-display text-lg font-semibold tracking-tight text-[#f6f8f7] [text-shadow:0_1px_14px_rgb(8_16_28/0.45)]"
             >
               {site.name}
             </a>
