@@ -110,18 +110,22 @@ export function ParallaxView() {
 
   return (
     <section id="view" aria-labelledby="view-title">
-      {/* The tall track gives the scroll room; the frame inside it stays pinned while the day passes. */}
-      <div ref={track} className="relative h-[300svh]">
-        <div className="sticky top-0 h-[100svh] overflow-hidden text-[#f6f8f7]">
+      {/*
+        The tall track gives the scroll room; the frame inside it stays pinned while the day passes.
+        On phones the address bar hides on scroll and the screen grows, so the photo fills the tallest
+        height (lvh) while the text keeps to the shortest (svh): no gap at the bottom, nothing hidden under the bar.
+      */}
+      <div ref={track} className="relative h-[300lvh]">
+        <div className="sticky top-0 h-[100lvh] overflow-hidden text-[#f6f8f7]">
           {phases.map((phase, i) => (
             <Phase key={phase.image} index={i} progress={scrollYProgress} />
           ))}
 
           {/* Shade at the top and bottom only, so the text reads while the middle of the photo stays clear. */}
-          <div aria-hidden className="absolute inset-x-0 top-0 h-[42%] bg-gradient-to-b from-[#08101c]/55 via-[#08101c]/20 to-transparent" />
-          <div aria-hidden className="absolute inset-x-0 bottom-0 h-[48%] bg-gradient-to-t from-[#08101c]/70 via-[#08101c]/25 to-transparent" />
+          <div aria-hidden className="absolute inset-x-0 top-0 h-[42svh] bg-gradient-to-b from-[#08101c]/55 via-[#08101c]/20 to-transparent" />
+          <div aria-hidden className="absolute inset-x-0 bottom-0 h-[calc(48svh+100lvh-100svh)] bg-gradient-to-t from-[#08101c]/70 via-[#08101c]/25 to-transparent" />
 
-          <div className="relative mx-auto flex h-full max-w-[1400px] flex-col justify-between px-4 pb-[calc(1.5rem+env(safe-area-inset-bottom))] pt-24 sm:pt-28 md:px-8 md:pb-12 md:pt-32">
+          <div className="relative mx-auto flex h-[100svh] max-w-[1400px] flex-col justify-between px-4 pb-[calc(1.5rem+env(safe-area-inset-bottom))] pt-24 sm:pt-28 md:px-8 md:pb-12 md:pt-32">
             <Reveal className="max-w-xl [text-shadow:0_1px_24px_rgb(8_16_28/0.35)]">
               <h2 id="view-title" className="text-balance font-display text-[2rem] font-semibold leading-[1.05] tracking-tighter sm:text-4xl md:text-5xl">
                 {site.view.headline}
