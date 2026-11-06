@@ -3,6 +3,7 @@ import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { List, Moon, Sun, X } from "@phosphor-icons/react";
 import { navLinks, site } from "../content/site";
 import { DARK_MODE_ENABLED, useTheme } from "../lib/theme";
+import { WhatsAppButton } from "./WhatsAppButton";
 
 /** True once the hero has scrolled up out of the way. The hero shows only the logo, so the bar waits for this. */
 function usePastHero() {
@@ -54,7 +55,7 @@ export function Nav() {
           >
             <a
               href="#top"
-              className="inline-flex min-h-11 items-center font-display text-lg font-semibold tracking-tight"
+              className="inline-flex min-h-11 items-center whitespace-nowrap font-display text-base font-semibold tracking-tight min-[400px]:text-lg"
             >
               {site.name}
             </a>
@@ -87,6 +88,7 @@ export function Nav() {
                   {theme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
                 </button>
               )}
+              <WhatsAppButton />
               <a
                 href="#booking"
                 className="hidden h-10 items-center rounded-full bg-accent px-5 text-sm font-medium text-accent-ink transition-transform active:scale-[0.98] sm:inline-flex"
